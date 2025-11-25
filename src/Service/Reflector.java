@@ -4,6 +4,13 @@ import java.util.Objects;
 
 public class Reflector implements CipherMapable {
     String ID;
+    int[] wires;
+
+
+    public Reflector(String ID, int[] wires) {
+        this.ID = ID;
+        this.wires = wires;
+    }
 
     @Override
     public boolean equals(Object o) {
