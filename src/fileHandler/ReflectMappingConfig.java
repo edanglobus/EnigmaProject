@@ -1,0 +1,32 @@
+package fileHandler;
+
+
+import javax.xml.bind.annotation.*;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+public class ReflectMappingConfig {
+
+    @XmlAttribute(name = "input")
+    private int input;
+
+    @XmlAttribute(name = "output")
+    private int output;
+
+    public ReflectMappingConfig() {}
+
+    public int getInput() {
+        return input;
+    }
+
+    public int getOutput() {
+        return output;
+    }
+
+    public void setInput(int input) {
+        this.input = input;
+    }
+
+    public void setOutput(int output) {
+        this.output = output;
+    }
+}
