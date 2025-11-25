@@ -1,6 +1,8 @@
 package Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public enum SystemChars {
     SPACE(' '),
@@ -109,22 +111,16 @@ public enum SystemChars {
         return value;
     }
 
-    public Collection<SystemChars> GenerateCharCollection(String CollectionType, List<SystemChars> charsIWant) {
-        if (charsIWant == null || CollectionType == null) {
-            throw new IllegalArgumentException("Input parameters cannot be null");
-        }
+    public Boolean ValidateChars(String charsIWant) {
+        Set<Character> validChars = Stream.of(SystemChars.values())
+                .map(SystemChars::getValue)
+                .collect(Collectors.toSet());
 
-        return switch (CollectionType.toLowerCase()) {
-            case "list" -> new ArrayList<>(charsIWant);
-            case "set" -> new HashSet<>(charsIWant);
-            case "map" -> {
-                Map<Integer, SystemChars> map = new HashMap<>();
-                for (int i = 0; i < charsIWant.size(); i++) {
-                    map.put(i, charsIWant.get(i));
-                }
-                yield map.values();
+        for (char c : charsIWant.toCharArray()) {
+            if (!validChars.contains(c)) {
+                return false;
             }
-            default -> throw new IllegalArgumentException("Unsupported collection type: " + CollectionType);
-        };
+        }
+        return true;
     }
 }
