@@ -1,4 +1,4 @@
-package fileHandler;
+package FileHandler;
 
 
 import javax.xml.bind.annotation.*;
@@ -28,5 +28,12 @@ public class PositioningConfig {
 
     public void setLeft(String left) {
         this.left = left;
+    }
+
+    public boolean validWiring(int alphabetSize) {
+        if (right.length() != alphabetSize) {
+            return false;
+        }
+        return left.length() == alphabetSize;
     }
 }

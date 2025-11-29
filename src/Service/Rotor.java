@@ -1,26 +1,29 @@
 package Service;
 
+import WiringCables.WiringRotor;
+
 import java.util.Objects;
 
-public class Router implements Roundable, CipherMapable {
-    private Wiring wiring;
+public class Rotor implements Roundable {
+    private WiringRotor wiringRotor;
     private final int ID;
-    private int noches;
+    private final int noche;
     private int position;
     private final int sizeABC;
-    private final String alphabet;
+    //private final String alphabet;
 
 
-    public Router(int ID, int noches, String alphabet) {
+    public Rotor(int ID, int noche, int  ABCSize, WiringRotor wiring) {
         this.ID = ID;
-        this.noches = noches;
-        this.alphabet = alphabet;
-        sizeABC = alphabet.length();
+        this.noche = noche;
+        this.sizeABC = ABCSize;
+        this.wiringRotor = wiring;
+        this.position = 0;
     }
 
-    public void setPosition(int position) {
-        this.position = position;
-    }
+//    public void setPosition(int position) {
+//        this.position = position;
+//    }
 
     private int normalize(int index) {
         int res = index % sizeABC;
@@ -30,8 +33,8 @@ public class Router implements Roundable, CipherMapable {
         return res;
     }
 
-    public void setWiring(Wiring connection) {
-        this.wiring = connection;
+    public void setWiring(WiringRotor connection) {
+        this.wiringRotor = connection;
     }
 
     /**
@@ -59,23 +62,53 @@ public class Router implements Roundable, CipherMapable {
         int entryContact = mapInputToRotorContact(inputIndex);
 
         // 2. Pass through the internal wiring (static wiring of rotor at position 0)
-        int wiredContact = wiring.wiringForwards[entryContact];
+        int wiredContact = wiringRotor.wiringForwards[entryContact];
 
         // 3. Convert wired contact back to logical index (undo rotation)
         return mapOutputToRotorContact(wiredContact);
     }
 
+    public int getID() {
+        return ID;
+    }
+    public int encodeBackward(int inputIndex) {
+        int entryContact = mapInputToRotorContact(inputIndex);
+        int wiredContact = wiringRotor.wiringBackwards[entryContact];
+        return mapOutputToRotorContact(wiredContact);
+    }
 
+    @Override
+    public void rotate (){
+        this.position = (this.position + 1) % sizeABC;
+    }
+
+    public int getNoche() {
+        return noche;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Router router = (Router) o;
-        return ID == router.ID;
+        Rotor rotor = (Rotor) o;
+        return ID == rotor.ID;
     }
 
     @Override
     public int hashCode() {
         return Objects.hashCode(ID);
+    }
+
+    @Override
+    public String toString() {
+        return "Reflector " + ID + ":\n" +
+                "    Wiring:\n" + wiringRotor;
     }
 }
