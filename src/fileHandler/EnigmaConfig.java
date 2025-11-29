@@ -44,5 +44,9 @@ public class EnigmaConfig {
     public void setReflectors(List<ReflectorConfig> reflectors) {
         this.reflectors = reflectors;
     }
+
+
+
+
 }
 

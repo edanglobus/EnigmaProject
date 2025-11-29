@@ -29,4 +29,14 @@ public class ReflectMappingConfig {
     public void setOutput(int output) {
         this.output = output;
     }
+
+    public boolean validWiring(int minPort, int maxPort) {
+        if (input < minPort || input > maxPort) {
+            return false;
+        }
+        if (output < minPort || output > maxPort) {
+            return false;
+        }
+        return input != output;
+    }
 }
