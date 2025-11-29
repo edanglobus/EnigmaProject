@@ -1,7 +1,7 @@
-package fileHandler;
+package FileHandler;
 
-import Service.Router;
-import Service.Wiring;
+import Service.Rotor;
+import WiringCables.WiringRotor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +18,10 @@ public class EnigmaConfigMapper {
      * Builds a list of Router objects from the JAXB config.
      * Each RotorConfig from the XML is converted into a Router + Wiring.
      */
-    public List<Router> buildRouters() {
+    public List<Rotor> buildRouters() {
 
         String alphabet = config.getAlphabet();
-        List<Router> result = new ArrayList<>();
+        List<Rotor> result = new ArrayList<>();
 
         for (RotorConfig rotorCfg : config.getRotors()) {
 
@@ -38,17 +38,14 @@ public class EnigmaConfigMapper {
             }
 
             // 2. Build Wiring object according to the columns
-            Wiring wiring = new Wiring();
-            wiring.setWiring(rightCol.toString(), leftCol.toString(), alphabet);
+            WiringRotor wiringRotor = new WiringRotor(rightCol.toString(), leftCol.toString(), alphabet);
 
             // 3. Build Router object, using your Router class
-            Router router = new Router(id, notch, alphabet);
-            router.setWiring(wiring);     // make sure setWiring is public
-            router.setPosition(0);        // default position (can be changed later)
+            Rotor rotor = new Rotor(id, notch, alphabet.length(), wiringRotor);
             // router.setRingSetting(0);  // if you have ring setting
 
             // 4. Add to the result list
-            result.add(router);
+            result.add(rotor);
         }
 
         return result;

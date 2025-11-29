@@ -1,14 +1,13 @@
-package Service;
+package WiringCables;
 
-public class Wiring {
+public class WiringRotor implements Wiring{
     public   int [] wiringForwards;
     public int [] wiringBackwards;
 
-    public Wiring(){}
 
-    public void setWiring(String rightColumn, String leftColumn, String alphabet) {
-        wiringForwards = new int[alphabet.length()];
-        wiringBackwards = new int[alphabet.length()];
+    public WiringRotor(String rightColumn, String leftColumn, String alphabet) {
+        this.wiringForwards = new int[alphabet.length()];
+        this.wiringBackwards = new int[alphabet.length()];
 
         if (rightColumn.length() != alphabet.length() || leftColumn.length() != alphabet.length()) {
             throw new IllegalArgumentException("Columns must match alphabet size");
@@ -28,4 +27,6 @@ public class Wiring {
             this.wiringBackwards[leftIndex] = rightIndex;
         }
     }
+
+
 }
