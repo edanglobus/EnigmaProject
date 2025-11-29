@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.function.Function;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ReflectorConfig implements WiredPart<ReflectMappingConfig> {
+public class ReflectorConfig implements WiredPart {
 
     @XmlAttribute(name = "id")
     private String id;  // e.g. "I", "II"
@@ -51,7 +51,7 @@ public class ReflectorConfig implements WiredPart<ReflectMappingConfig> {
         return romanToInt.apply(this.id);
     }
 
-    @Override
+
     public List<ReflectMappingConfig> getWires() {
         return this.mappings;
     }

@@ -1,11 +1,9 @@
 package FileHandler;
 
-import java.util.List;
-
-public interface WiredPart<IO> {
+public interface WiredPart {
 
 
     String getPartType();
     int getID();
-    List<IO> getWires();
+
 }

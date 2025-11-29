@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class RotorConfig implements WiredPart<PositioningConfig> {
+public class RotorConfig implements WiredPart {
 
     @XmlAttribute(name = "id")
     private int id;
@@ -54,7 +54,7 @@ public class RotorConfig implements WiredPart<PositioningConfig> {
         return this.id;
     }
 
-    @Override
+
     public List<PositioningConfig> getWires() {
         return this.positions;
     }
