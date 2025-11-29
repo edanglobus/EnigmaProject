@@ -65,7 +65,9 @@ public class Router implements Roundable, CipherMapable {
         return mapOutputToRotorContact(wiredContact);
     }
 
-
+    public int getID() {
+        return ID;
+    }
 
     @Override
     public boolean equals(Object o) {
