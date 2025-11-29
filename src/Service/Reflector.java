@@ -1,15 +1,21 @@
 package Service;
 
+import WiringCables.WiringReflactor;
+
 import java.util.Objects;
 
-public class Reflector implements CipherMapable {
-    String ID;
-    int[] wires;
+public class Reflector  {
+   private final String ID;
+   private final WiringReflactor wiringReflactor;
 
-
-    public Reflector(String ID, int[] wires) {
+    public Reflector(String ID, WiringReflactor wiring) {
         this.ID = ID;
-        this.wires = wires;
+        this.wiringReflactor = wiring;
+
+    }
+
+    public int reflect(int index){
+        return wiringReflactor.wiringRef[index];
     }
 
     @Override

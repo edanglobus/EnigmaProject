@@ -1,12 +1,16 @@
 package parts;
 
-import fileHandler.*;
+
+import FileHandler.EnigmaConfig;
+import FileHandler.EnigmaConfigMapper;
+import FileHandler.ReflectorConfig;
+import FileHandler.RotorConfig;
 import parts.reflector.ReflectorStorage;
 import parts.routor.RoutorStorage;
 
 public class PartsManager {
 
-    EnigmaConfig EC
+    EnigmaConfig EC;
     PartsConfigValidator PCV;
     RoutorStorage RS;
     ReflectorStorage RFS;

@@ -1,4 +1,4 @@
-package fileHandler;
+package FileHandler;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.*;

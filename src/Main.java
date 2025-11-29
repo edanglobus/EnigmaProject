@@ -109,9 +109,9 @@
 
 
 // ************* main for check if the configuration mapping works **************
-import fileHandler.EnigmaJaxbLoader;
-import fileHandler.EnigmaConfig;
-import fileHandler.EnigmaConfigMapper;
+import FileHandler.EnigmaJaxbLoader;
+import FileHandler.EnigmaConfig;
+import FileHandler.EnigmaConfigMapper;
 import Service.Router;
 
 import javax.xml.bind.JAXBException;

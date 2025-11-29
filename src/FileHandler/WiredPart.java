@@ -1,4 +1,4 @@
-package fileHandler;
+package FileHandler;
 
 import java.util.List;
 

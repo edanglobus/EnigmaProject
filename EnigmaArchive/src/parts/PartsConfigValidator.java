@@ -1,8 +1,8 @@
 package parts;
 
-import fileHandler.WiredPart;
-import fileHandler.PositioningConfig;
-import fileHandler.ReflectMappingConfig;
+import FileHandler.WiredPart;
+import FileHandler.PositioningConfig;
+import FileHandler.ReflectMappingConfig;
 
 import java.util.HashSet;
 import java.util.List;
