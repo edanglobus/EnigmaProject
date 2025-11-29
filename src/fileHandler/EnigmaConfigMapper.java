@@ -53,4 +53,8 @@ public class EnigmaConfigMapper {
 
         return result;
     }
+
+    public EnigmaConfig getEnigmaConfig() {
+        return this.config;
+    }
 }

@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.*;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class RotorConfig implements WiredPart {
+public class RotorConfig implements WiredPart<PositioningConfig> {
 
     @XmlAttribute(name = "id")
     private int id;

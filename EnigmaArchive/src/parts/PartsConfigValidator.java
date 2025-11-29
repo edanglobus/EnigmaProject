@@ -10,7 +10,6 @@ import java.util.Set;
 
 public class PartsConfigValidator {
     String ABC;
-    boolean isValid = false;
     public static Set<Integer> usedRoutorIds = new HashSet<>();
     public static Set<Integer> usedReflectorIds = new HashSet<>();
 
@@ -28,14 +27,14 @@ public class PartsConfigValidator {
 
 
         if (type.equals("RotorConfig")) {
-            pass = idInRange(1,Integer.MAX_VALUE) && idNotUsed() && routorWiringisValid((List<PositioningConfig>) wires);
+            pass = idInRange(1,Integer.MAX_VALUE, id) && idNotUsed(wp) && routorWiringisValid((List<PositioningConfig>) wires);
         } else if (type.equals("ReflectorConfig")) {
-            pass = idInRange(1,5) && idNotUsed() && reflectorWiringisValid((List<ReflectMappingConfig>) wires);
+            pass = idInRange(1,5,id) && idNotUsed(wp) && reflectorWiringisValid((List<ReflectMappingConfig>) wires);
         }
         return pass;
     }
 
-    public boolean reflectorWiringisValid(List<ReflectMappingConfig> wires) {
+    private boolean reflectorWiringisValid(List<ReflectMappingConfig> wires) {
 
        int minPort = 1;
        int maxPort = wires.size() * 2;
@@ -62,7 +61,7 @@ public class PartsConfigValidator {
        return true;
     }
 
-    public boolean routorWiringisValid(List<PositioningConfig> wires) {
+    private boolean routorWiringisValid(List<PositioningConfig> wires) {
         int minPort = 0;
         int maxPort = ABC.length() - 1;
 
@@ -86,26 +85,22 @@ public class PartsConfigValidator {
         return true;
     }
 
-    public boolean reflectorWiringisValid() {
-        return isValid;
-    }
-
-    public boolean idNotUsed() {
-        if (currentWiredPart.getPartType().equals("RouterConfig")) {
-            if (!usedRoutorIds.contains(currentWiredPart.getID())) {
-                usedRoutorIds.add(currentWiredPart.getID());
+    private <IO> boolean idNotUsed(WiredPart<IO> wp) {
+        if (wp.getPartType().equals("RouterConfig")) {
+            if (!usedRoutorIds.contains(wp.getID())) {
+                usedRoutorIds.add(wp.getID());
                 return true;
             }
-        } else if (currentWiredPart.getPartType().equals("ReflectorConfig")) {
-            if (!usedReflectorIds.contains(currentWiredPart.getID())) {
-                usedReflectorIds.add(currentWiredPart.getID());
+        } else if (wp.getPartType().equals("ReflectorConfig")) {
+            if (!usedReflectorIds.contains(wp.getID())) {
+                usedReflectorIds.add(wp.getID());
                 return true;
             }
         }
         return false;
     }
 
-    public boolean idInRange(int from, int to) {
-        return currentWiredPart.getID() >= from && currentWiredPart.getID() <= to;
+    private boolean idInRange(int from, int to, int id) {
+        return id >= from && id <= to;
     }
 }
