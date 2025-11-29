@@ -1,8 +1,13 @@
 package FileHandler;
 
+import Service.Reflector;
 import Service.Rotor;
+import WiringCables.WiringReflactor;
 import WiringCables.WiringRotor;
+
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class EnigmaConfigMapper {
@@ -50,7 +55,38 @@ public class EnigmaConfigMapper {
         return rotors;
     }
 
+    public Map<String, Reflector> buildReflectors() {
+        String alphabet = config.getAlphabet();
 
+
+        List<ReflectorConfig> reflectorsList = config.getReflectors();
+        if (reflectorsList == null || reflectorsList.isEmpty()) {
+            return Collections.emptyMap();
+        }
+
+        Map<String, Reflector> reflectors = new HashMap<>();
+        for (ReflectorConfig reflectorConfig : reflectorsList) {
+            String id = reflectorConfig.getId();
+            StringBuilder leftCol = new StringBuilder();
+            StringBuilder rightCol = new StringBuilder();
+
+            List<ReflectMappingConfig> mappings = reflectorConfig.getMappings();
+            if (mappings != null) {
+                for (ReflectMappingConfig m : mappings) {
+                    rightCol.append(m.getInput());
+                    rightCol.append(" ");
+                    leftCol.append(m.getOutput());
+                    leftCol.append(" ");
+                }
+            }
+
+            WiringReflactor wiring = new WiringReflactor(rightCol.toString(),leftCol.toString(), alphabet.length());
+            Reflector reflector = new Reflector(id, wiring);
+            reflectors.put(id, reflector);
+        }
+
+        return reflectors;
+    }
 
     public EnigmaConfig getEnigmaConfig() {
         return this.config;

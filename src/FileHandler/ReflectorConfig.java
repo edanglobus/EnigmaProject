@@ -56,4 +56,32 @@ public class ReflectorConfig implements WiredPart<ReflectMappingConfig> {
         return this.mappings;
     }
 
+    public boolean reflectorWiringisValid() {
+        List<ReflectMappingConfig> wires = getMappings();
+        int minPort = 1;
+        int maxPort = wires.size() * 2;
+
+        // Check that each mapping is valid and that no input or output is repeated
+        boolean[] usedInputs = new boolean[maxPort - minPort + 1];
+        boolean[] usedOutputs = new boolean[maxPort - minPort + 1];
+
+        for (ReflectMappingConfig mapping : wires) {
+            int input = mapping.getInput();
+            int output = mapping.getOutput();
+
+            if (!mapping.validWiring(minPort, maxPort)) {
+                return false;
+            }
+
+            if (usedInputs[input - minPort] || usedOutputs[output - minPort]) {
+                return false; // Duplicate input or output
+            }
+
+            usedInputs[input - minPort] = true;
+            usedOutputs[output - minPort] = true;
+        }
+        return true;
+    }
+
+
 }

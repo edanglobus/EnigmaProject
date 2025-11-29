@@ -1,40 +1,37 @@
 package parts;
 
-import FileHandler.WiredPart;
 import FileHandler.PositioningConfig;
-import FileHandler.ReflectMappingConfig;
+import FileHandler.ReflectorConfig;
+import FileHandler.RotorConfig;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class PartsConfigValidator {
-    String ABC;
     public static Set<Integer> usedRoutorIds = new HashSet<>();
     public static Set<Integer> usedReflectorIds = new HashSet<>();
 
 
 
-    public PartsConfigValidator(String ABC) {
-        this.ABC = ABC;
+    public PartsConfigValidator() {
     }
 
-    public <IO> boolean runValidation(WiredPart<IO> wp) {
-        String type = wp.getPartType();
-        int id = wp.getID();
-        List<IO> wires = wp.getWires();
+    public boolean runRotorValidation(RotorConfig rotor) {
+        int id = rotor.getID();
+        List<PositioningConfig> wires = rotor.getWires();
         boolean pass = false;
-
-
-        if (type.equals("RotorConfig")) {
-            pass = idInRange(1,Integer.MAX_VALUE, id) && idNotUsed(wp) && routorWiringisValid((List<PositioningConfig>) wires);
-        } else if (type.equals("ReflectorConfig")) {
-            pass = idInRange(1,5,id) && idNotUsed(wp) && reflectorWiringisValid((List<ReflectMappingConfig>) wires);
-        }
+        pass = idInRange(1,Integer.MAX_VALUE, id) && rotorIdNotUsed(rotor);
+        return pass;
+    }
+    public boolean runReflectorValidation(ReflectorConfig reflector) {
+        int id = reflector.getID();
+        boolean pass = false;
+        pass = idInRange(1,5, id) && reflectorIdNotUsed(reflector);
         return pass;
     }
 
-    private boolean reflectorWiringisValid(List<ReflectMappingConfig> wires) {
+    /*private boolean reflectorWiringisValid(List<ReflectMappingConfig> wires) {
 
        int minPort = 1;
        int maxPort = wires.size() * 2;
@@ -59,9 +56,9 @@ public class PartsConfigValidator {
            usedOutputs[output - minPort] = true;
        }
        return true;
-    }
+    }*/
 
-    private boolean routorWiringisValid(List<PositioningConfig> wires) {
+    /*private boolean routorWiringisValid(List<PositioningConfig> wires) {
         int minPort = 0;
         int maxPort = ABC.length() - 1;
 
@@ -83,19 +80,19 @@ public class PartsConfigValidator {
             usedReoutorOutPorts.add(ABC.indexOf(left));
         }
         return true;
-    }
+    }*/
 
-    private <IO> boolean idNotUsed(WiredPart<IO> wp) {
-        if (wp.getPartType().equals("RouterConfig")) {
-            if (!usedRoutorIds.contains(wp.getID())) {
-                usedRoutorIds.add(wp.getID());
-                return true;
-            }
-        } else if (wp.getPartType().equals("ReflectorConfig")) {
-            if (!usedReflectorIds.contains(wp.getID())) {
-                usedReflectorIds.add(wp.getID());
-                return true;
-            }
+    private boolean rotorIdNotUsed(RotorConfig rotor) {
+        if (!usedRoutorIds.contains(rotor.getID())) {
+            usedRoutorIds.add(rotor.getID());
+            return true;
+        }
+        return false;
+    }
+    private boolean reflectorIdNotUsed(ReflectorConfig rotor) {
+        if (!usedReflectorIds.contains(rotor.getID())) {
+            usedReflectorIds.add(rotor.getID());
+            return true;
         }
         return false;
     }

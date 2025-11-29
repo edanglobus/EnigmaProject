@@ -5,12 +5,12 @@ import WiringCables.WiringRotor;
 import java.util.Objects;
 
 public class Rotor implements Roundable {
-    private final WiringRotor wiringRotor;
+    private WiringRotor wiringRotor;
     private final int ID;
     private final int noche;
     private int position;
     private final int sizeABC;
-    private final String alphabet;
+    //private final String alphabet;
 
 
     public Rotor(int ID, int noche, int  ABCSize, WiringRotor wiring) {
@@ -33,8 +33,8 @@ public class Rotor implements Roundable {
         return res;
     }
 
-    public void setWiring(Wiring connection) {
-        this.wiring = connection;
+    public void setWiring(WiringRotor connection) {
+        this.wiringRotor = connection;
     }
 
     /**
@@ -104,5 +104,11 @@ public class Rotor implements Roundable {
     @Override
     public int hashCode() {
         return Objects.hashCode(ID);
+    }
+
+    @Override
+    public String toString() {
+        return "Reflector " + ID + ":\n" +
+                "    Wiring:\n" + wiringRotor;
     }
 }

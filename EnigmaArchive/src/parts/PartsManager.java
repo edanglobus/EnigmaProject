@@ -1,30 +1,27 @@
 package parts;
 
 
-import FileHandler.EnigmaConfig;
-import FileHandler.EnigmaConfigMapper;
-import FileHandler.ReflectorConfig;
-import FileHandler.RotorConfig;
+import FileHandler.*;
 import parts.reflector.ReflectorStorage;
-import parts.routor.RoutorStorage;
+import parts.routor.RotorStorage;
 
 public class PartsManager {
-
+    EnigmaJaxbLoader supplyLoader;
     EnigmaConfig EC;
+    EnigmaConfigMapper ECM;
     PartsConfigValidator PCV;
-    RoutorStorage RS;
+    RotorStorage RS;
     ReflectorStorage RFS;
 
 
-    public PartsManager(EnigmaConfigMapper ECM) {
-        this.EC = ECM.getEnigmaConfig();
-        this.PCV = new PartsConfigValidator(EC.getAlphabet());
+    public PartsManager(EnigmaJaxbLoader loader) {
+       this.supplyLoader = loader;
     }
 
-    public boolean validatePartsConfig() {
+    private boolean validatePartsConfig() {
         if (EC.getRotors() != null) {
             for (RotorConfig rotorConfig : EC.getRotors()) {
-                if (PCV.runValidation(rotorConfig)) {
+                if (!PCV.runRotorValidation(rotorConfig)) {
                     return false;
                 }
             }
@@ -32,7 +29,7 @@ public class PartsManager {
 
         if (EC.getReflectors() != null) {
             for (ReflectorConfig reflectorConfig : EC.getReflectors()) {
-                if (PCV.runValidation(reflectorConfig)) {
+                if (!PCV.runReflectorValidation(reflectorConfig)) {
                     return false;
                 }
             }
@@ -41,7 +38,37 @@ public class PartsManager {
         return true;
     }
 
-    public int getPartCount(PartsStorage storage) {
-        return storage.getPartCount();
+    private void buildStorages() {
+        boolean canBuild = validatePartsConfig() && EC.validateWires();
+        if (canBuild) {
+            RS = new RotorStorage(ECM.buildRouters());
+            RFS = new ReflectorStorage(ECM.buildReflectors());
+        } else {
+            throw new IllegalStateException("Cannot build storages due to invalid configuration.");
+        }
     }
+
+    private void loadSupplyFromXML(String path) throws Exception {
+        EC = supplyLoader.loadFromFile(path);
+        ECM = new EnigmaConfigMapper(EC);
+        PCV = new PartsConfigValidator();
+    }
+
+    public void loadSupplyXMLCheckAndBuildStorages(String path) throws Exception {
+        loadSupplyFromXML(path);
+        buildStorages();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("PartsManager{");
+        sb.append("RotorStorage=");
+        sb.append(RS == null ? "null" : RS.toString());
+        sb.append(", ReflectorStorage=");
+        sb.append(RFS == null ? "null" : RFS.toString());
+        sb.append('}');
+        return sb.toString();
+    }
+
 }
