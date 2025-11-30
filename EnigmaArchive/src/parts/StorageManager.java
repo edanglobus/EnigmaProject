@@ -2,19 +2,25 @@ package parts;
 
 
 import FileHandler.*;
+import Service.Reflector;
+import Service.Rotor;
 import parts.reflector.ReflectorStorage;
 import parts.routor.RotorStorage;
 
-public class PartsManager {
-    EnigmaJaxbLoader supplyLoader;
-    EnigmaConfig EC;
-    EnigmaConfigMapper ECM;
-    PartsConfigValidator PCV;
-    RotorStorage RS;
-    ReflectorStorage RFS;
+import javax.lang.model.element.NestingKind;
+import java.util.List;
+
+public class StorageManager {
+    private EnigmaJaxbLoader supplyLoader;
+    private EnigmaConfig EC;
+    private EnigmaConfigMapper ECM;
+    private PartsConfigValidator PCV;
+    private RotorStorage RS;
+    private ReflectorStorage RFS;
+    private String ABC;
 
 
-    public PartsManager(EnigmaJaxbLoader loader) {
+    public StorageManager(EnigmaJaxbLoader loader) {
        this.supplyLoader = loader;
     }
 
@@ -52,11 +58,46 @@ public class PartsManager {
         EC = supplyLoader.loadFromFile(path);
         ECM = new EnigmaConfigMapper(EC);
         PCV = new PartsConfigValidator();
+        ABC = EC.getAlphabet();
     }
 
     public void loadSupplyXMLCheckAndBuildStorages(String path) throws Exception {
         loadSupplyFromXML(path);
         buildStorages();
+    }
+
+     private boolean IsInSupplyRotorID(int id) {
+         return RS.containsRotor(id);
+     }
+
+     private boolean IsInSupplyReflectorID(String id) {
+         return RFS.containsReflector(id);
+     }
+
+     public Reflector optionalGetReflectorByID(String id) {
+            if (!IsInSupplyReflectorID(id)) {
+                throw (new IllegalArgumentException("Reflector ID " + id + " not found in storage."));
+            }
+            return RFS.getReflectorByID(id);
+        }
+
+     public Rotor optionalGetRotorByID(int id) {
+        if (!IsInSupplyRotorID(id)) {
+            throw (new IllegalArgumentException("Rotor ID " + id + " not found in storage."));
+        }
+         return RS.getRotorByID(id);
+     }
+
+    public String getABC() {
+        return ABC;
+    }
+
+    public void showAvailableReflectors() {
+        RFS.printAvailableReflectors();
+    }
+
+    public void printStorages() {
+        System.out.print(this.toString());
     }
 
     @Override
@@ -69,6 +110,18 @@ public class PartsManager {
         sb.append(RFS == null ? "null" : RFS.toString());
         sb.append('}');
         return sb.toString();
+    }
+
+    public List<Integer> getIndexInABC(List<Character> lst) {
+        return lst.stream()
+                .map(ch -> {
+                    int index = ABC.indexOf(ch);
+                    if (index == -1) {
+                        throw new IllegalArgumentException("Character '" + ch + "' not found in alphabet.");
+                    }
+                    return index;
+                })
+                .toList();
     }
 
 }
