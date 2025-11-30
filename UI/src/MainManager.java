@@ -39,7 +39,7 @@ public class MainManager {
         }
         System.out.printf("Write the string you want to encode/decode:\n");
         Scanner sc = new Scanner(System.in);
-        String input = sc.nextLine().trim();
+        String input = sc.nextLine().trim().toUpperCase();
         String chiper = enigmaEngine.processString(input);
         System.out.printf("The result is:\n%s\n", chiper);
 

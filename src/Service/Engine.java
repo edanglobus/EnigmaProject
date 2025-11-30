@@ -19,7 +19,6 @@ public class Engine {
             throw new IllegalArgumentException("Char '" + ch + "' not in alphabet");
         }
         manager.stepRotors();
-        manager.printRotorsState();
         int signal = manager.passForward(index);
         signal = reflector.reflect(signal);
         signal = manager.passBackward(signal);
