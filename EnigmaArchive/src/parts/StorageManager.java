@@ -74,7 +74,7 @@ public class StorageManager {
          return RFS.containsReflector(id);
      }
 
-        public Reflector optionalGetReflectorByID(String id) {
+     public Reflector optionalGetReflectorByID(String id) {
             if (!IsInSupplyReflectorID(id)) {
                 throw (new IllegalArgumentException("Reflector ID " + id + " not found in storage."));
             }
