@@ -16,7 +16,6 @@ public class MainManager {
     boolean isFileLoaded = false;
 
 
-
     public void order1() throws Exception {
         System.out.println("Supply XML path:");
         Scanner sc = new Scanner(System.in);
