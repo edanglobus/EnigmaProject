@@ -4,7 +4,7 @@ package Service;
 public class Engine {
 
     private final Reflector reflector;
-    private  final rotorsManagers manager;
+    private final rotorsManagers manager;
     private final String alphabet;
 
     public Engine(Reflector reflector, rotorsManagers manager, String alphabet) {
@@ -19,6 +19,7 @@ public class Engine {
             throw new IllegalArgumentException("Char '" + ch + "' not in alphabet");
         }
         manager.stepRotors();
+        manager.printRotorsState();
         int signal = manager.passForward(index);
         signal = reflector.reflect(signal);
         signal = manager.passBackward(signal);
@@ -33,7 +34,12 @@ public class Engine {
         return sb.toString();
     }
 
+    public rotorsManagers getRotorsManagers() {
+        return manager;
+    }
 
-
+    public void trackRotorsState() {
+        manager.printRotorsState();
+    }
 
 }

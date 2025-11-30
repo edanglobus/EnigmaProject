@@ -21,10 +21,6 @@ public class Rotor implements Roundable {
         this.position = 0;
     }
 
-//    public void setPosition(int position) {
-//        this.position = position;
-//    }
-
     private int normalize(int index) {
         int res = index % sizeABC;
         if (res < 0) {
@@ -108,7 +104,7 @@ public class Rotor implements Roundable {
 
     @Override
     public String toString() {
-        return "Reflector " + ID + ":\n" +
+        return "Rotor " + ID + ":\n" +
                 "    Wiring:\n" + wiringRotor;
     }
 }

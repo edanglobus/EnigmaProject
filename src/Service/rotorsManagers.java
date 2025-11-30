@@ -1,5 +1,7 @@
 package Service;
 
+import java.util.List;
+
 public class rotorsManagers {
     private final Rotor[] rotors;
 
@@ -7,11 +9,21 @@ public class rotorsManagers {
         this.rotors = rotors;
     }
 
-
     public void stepRotors(){
         rotors[0].rotate();
         checkRotate();
     }
+
+    public void setRotorPosition(List<Integer> position){
+        if (position.size() != rotors.length){
+            throw new IllegalArgumentException("Position list size does not match number of rotors");
+        }
+
+        for (int i = 0; i < rotors.length; i++) {
+            rotors[i].setPosition(position.get(i));
+        }
+    }
+
 
     //check if the rotors need to rotate the next rotor
     public void checkRotate(){
@@ -38,6 +50,12 @@ public class rotorsManagers {
             signal = rotors[i].encodeBackward(signal);
         }
         return signal;
+    }
+
+    public void printRotorsState(){
+        for (Rotor rotor : rotors) {
+            System.out.printf("Rotor ID: %d, Position: %d, Noche: %d\n", rotor.getID(), rotor.getPosition(), rotor.getNoche());
+        }
     }
 }
 

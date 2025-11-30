@@ -7,10 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="Enigma1.0" exported="" />
     <orderEntry type="module" module-name="EnigmaArchive" exported="" />
-    <orderEntry type="library" exported="" name="javax.activation" level="project" />
-    <orderEntry type="library" exported="" name="javax.xml.bind.jaxb.api" level="project" />
-    <orderEntry type="library" exported="" name="sun.xml.bind.jaxb.impl" level="project" />
-    <orderEntry type="module" module-name="UI" exported="" />
   </component>
 </module>

@@ -17,6 +17,11 @@ public class RotorStorage implements PartsStorage {
         return rotorMap.get(id);
     }
 
+    public boolean containsRotor(int id) {
+        return rotorMap.containsKey(id);
+    }
+
+
     @Override
     public int getPartCount() {
         return rotorMap.size();
@@ -24,6 +29,6 @@ public class RotorStorage implements PartsStorage {
 
     @Override
     public String toString() {
-        return "ReflectorStorage: \n" + rotorMap.values();
+        return "RotorStorage: \n" + rotorMap.values();
     }
 }
