@@ -1,10 +1,14 @@
 package FileHandler;
 
+import Service.Reflector;
 import Service.Rotor;
+import WiringCables.WiringReflactor;
 import WiringCables.WiringRotor;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class EnigmaConfigMapper {
 
@@ -18,10 +22,10 @@ public class EnigmaConfigMapper {
      * Builds a list of Router objects from the JAXB config.
      * Each RotorConfig from the XML is converted into a Router + Wiring.
      */
-    public List<Rotor> buildRouters() {
+    public Map<Integer, Rotor> buildRouters() {
 
         String alphabet = config.getAlphabet();
-        List<Rotor> result = new ArrayList<>();
+        Map<Integer, Rotor> rotors = new HashMap<>();
 
         for (RotorConfig rotorCfg : config.getRotors()) {
 
@@ -45,9 +49,46 @@ public class EnigmaConfigMapper {
             // router.setRingSetting(0);  // if you have ring setting
 
             // 4. Add to the result list
-            result.add(rotor);
+            rotors.put(id, rotor);
         }
 
-        return result;
+        return rotors;
+    }
+
+    public Map<String, Reflector> buildReflectors() {
+        String alphabet = config.getAlphabet();
+
+
+        List<ReflectorConfig> reflectorsList = config.getReflectors();
+        if (reflectorsList == null || reflectorsList.isEmpty()) {
+            return Collections.emptyMap();
+        }
+
+        Map<String, Reflector> reflectors = new HashMap<>();
+        for (ReflectorConfig reflectorConfig : reflectorsList) {
+            String id = reflectorConfig.getId();
+            StringBuilder leftCol = new StringBuilder();
+            StringBuilder rightCol = new StringBuilder();
+
+            List<ReflectMappingConfig> mappings = reflectorConfig.getMappings();
+            if (mappings != null) {
+                for (ReflectMappingConfig m : mappings) {
+                    rightCol.append(m.getInput());
+                    rightCol.append(" ");
+                    leftCol.append(m.getOutput());
+                    leftCol.append(" ");
+                }
+            }
+
+            WiringReflactor wiring = new WiringReflactor(rightCol.toString(),leftCol.toString(), alphabet.length());
+            Reflector reflector = new Reflector(id, wiring);
+            reflectors.put(id, reflector);
+        }
+
+        return reflectors;
+    }
+
+    public EnigmaConfig getEnigmaConfig() {
+        return this.config;
     }
 }

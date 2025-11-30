@@ -29,4 +29,11 @@ public class Reflector  {
     public int hashCode() {
         return Objects.hashCode(ID);
     }
+
+    @Override
+    public String toString() {
+        return "Reflector " + ID + ":\n" +
+                "    Wiring:\n" + wiringReflactor;
+    }
+
 }

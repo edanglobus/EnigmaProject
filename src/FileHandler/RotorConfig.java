@@ -2,10 +2,12 @@ package FileHandler;
 
 
 import javax.xml.bind.annotation.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class RotorConfig {
+public class RotorConfig implements WiredPart {
 
     @XmlAttribute(name = "id")
     private int id;
@@ -40,5 +42,45 @@ public class RotorConfig {
 
     public void setPositions(List<PositioningConfig> positions) {
         this.positions = positions;
+    }
+
+    @Override
+    public String getPartType() {
+        return ReflectorConfig.class.getSimpleName();
+    }
+
+    @Override
+    public int getID() {
+        return this.id;
+    }
+
+
+    public List<PositioningConfig> getWires() {
+        return this.positions;
+    }
+
+    public boolean rotorWiringisValid(String ABC) {
+        List<PositioningConfig> wires = getPositions();
+        int minPort = 0;
+        int maxPort = ABC.length() - 1;
+
+        // Check that each positioning is valid and that no right or left value is repeated
+        Set<Integer> usedReoutorInPorts = new HashSet<>();
+        Set<Integer> usedReoutorOutPorts = new HashSet<>();
+
+        for (PositioningConfig position : wires) {
+            String right = position.getRight();
+            String left = position.getLeft();
+
+            if(!(ABC.contains(right)) || !(ABC.contains(left)) ) {
+                return false;
+            }
+            if (usedReoutorInPorts.contains(ABC.indexOf(right)) || usedReoutorOutPorts.contains(ABC.indexOf(left))) {
+                return false; // Duplicate found
+            }
+            usedReoutorInPorts.add(ABC.indexOf(right));
+            usedReoutorOutPorts.add(ABC.indexOf(left));
+        }
+        return true;
     }
 }

@@ -1,6 +1,7 @@
 package FileHandler;
 
 import javax.xml.bind.annotation.*;
+import java.security.PublicKey;
 import java.util.List;
 
 @XmlRootElement(name = "BTE-Enigma")
@@ -43,6 +44,20 @@ public class EnigmaConfig {
 
     public void setReflectors(List<ReflectorConfig> reflectors) {
         this.reflectors = reflectors;
+    }
+
+    public boolean validateWires() {
+        for (RotorConfig rotor : rotors) {
+            if (!rotor.rotorWiringisValid(alphabet)) {
+                return false;
+            }
+        }
+        for (ReflectorConfig reflector : reflectors) {
+            if (!reflector.reflectorWiringisValid()) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 

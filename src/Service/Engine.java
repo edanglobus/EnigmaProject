@@ -1,9 +1,10 @@
 package Service;
 
+
 public class Engine {
 
     private final Reflector reflector;
-    private  final rotorsManagers manager;
+    private final rotorsManagers manager;
     private final String alphabet;
 
     public Engine(Reflector reflector, rotorsManagers manager, String alphabet) {
@@ -32,7 +33,12 @@ public class Engine {
         return sb.toString();
     }
 
+    public rotorsManagers getRotorsManagers() {
+        return manager;
+    }
 
-
+    public void trackRotorsState() {
+        manager.printRotorsState();
+    }
 
 }

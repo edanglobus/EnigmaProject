@@ -35,4 +35,16 @@ public class WiringReflactor {
             this.wiringRef[out] = in;
         }
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < wiringRef.length; i++) {
+            sb.append(String.format("         %d: (%d -> %d)",i, i + 1 , wiringRef[i] + 1));
+            if (i % 5 == 0) {
+                sb.append("\n");
+            }
+        }
+        return sb.toString();
+    }
 }

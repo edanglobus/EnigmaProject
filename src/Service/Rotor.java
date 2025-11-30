@@ -5,11 +5,12 @@ import WiringCables.WiringRotor;
 import java.util.Objects;
 
 public class Rotor implements Roundable {
-    private final WiringRotor wiringRotor;
+    private WiringRotor wiringRotor;
     private final int ID;
     private final int noche;
     private int position;
     private final int sizeABC;
+    //private final String alphabet;
 
 
     public Rotor(int ID, int noche, int  ABCSize, WiringRotor wiring) {
@@ -20,10 +21,6 @@ public class Rotor implements Roundable {
         this.position = 0;
     }
 
-//    public void setPosition(int position) {
-//        this.position = position;
-//    }
-
     private int normalize(int index) {
         int res = index % sizeABC;
         if (res < 0) {
@@ -32,6 +29,9 @@ public class Rotor implements Roundable {
         return res;
     }
 
+    public void setWiring(WiringRotor connection) {
+        this.wiringRotor = connection;
+    }
 
     /**
      * Converts an input signal index (0...size-1) into the
@@ -64,6 +64,9 @@ public class Rotor implements Roundable {
         return mapOutputToRotorContact(wiredContact);
     }
 
+    public int getID() {
+        return ID;
+    }
     public int encodeBackward(int inputIndex) {
         int entryContact = mapInputToRotorContact(inputIndex);
         int wiredContact = wiringRotor.wiringBackwards[entryContact];
@@ -97,5 +100,11 @@ public class Rotor implements Roundable {
     @Override
     public int hashCode() {
         return Objects.hashCode(ID);
+    }
+
+    @Override
+    public String toString() {
+        return "Rotor " + ID + ":\n" +
+                "    Wiring:\n" + wiringRotor;
     }
 }
