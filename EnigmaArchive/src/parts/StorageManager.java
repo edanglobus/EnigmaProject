@@ -124,4 +124,13 @@ public class StorageManager {
                 .toList();
     }
 
+    public int getRotorsAmount() {
+        return RS.getPartCount();
+    }
+
+    public int getReflectorsAmount() {
+        return RFS.getPartCount();
+    }
+
+
 }

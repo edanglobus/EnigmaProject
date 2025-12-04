@@ -1,6 +1,8 @@
 import FileHandler.EnigmaJaxbLoader;
 import Manual.ManualConfiguration;
 import Service.Engine;
+import Service.Rotor;
+import Service.Utils;
 import parts.StorageManager;
 
 import java.util.Scanner;
@@ -8,9 +10,10 @@ import java.util.Scanner;
 public class MainManager {
 
     private final EnigmaJaxbLoader Loader = new EnigmaJaxbLoader();
-    private final StorageManager PM = new StorageManager(Loader);
+    private final StorageManager SM = new StorageManager(Loader);
     private String path;
     private Engine enigmaEngine;
+
 
 
     boolean isFileLoaded = false;
@@ -21,7 +24,7 @@ public class MainManager {
         Scanner sc = new Scanner(System.in);
         String path = sc.nextLine().trim(); //to check path
 
-        PM.loadSupplyXMLCheckAndBuildStorages(path);
+        SM.loadSupplyXMLCheckAndBuildStorages(path);
         isFileLoaded = true;
     }
 
@@ -29,7 +32,7 @@ public class MainManager {
         if (!isFileLoaded) {
             throw new UnsupportedOperationException("XML File Not Loaded Yet - Make Order 1 First");
         }
-        ManualConfiguration manualConfiguration = new ManualConfiguration(PM);
+        ManualConfiguration manualConfiguration = new ManualConfiguration(SM);
         this.enigmaEngine = manualConfiguration.configureAndGetEngine();
     }
 
@@ -44,5 +47,71 @@ public class MainManager {
         System.out.printf("The result is:\n%s\n", chiper);
 
     }
+
+    public void order2(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Amount of rotors: ");
+        sb.append(SM.getRotorsAmount());
+        sb.append("\n");
+        sb.append("Amount of reflectors: ");
+        sb.append(SM.getReflectorsAmount());
+        sb.append("\n");
+        sb.append("amount of string that encoded: ");
+        sb.append(enigmaEngine.getNumberOfEncryptions());
+        sb.append("\n");
+        sb.append("Original code: ");
+        sb.append(getOriginalCode());
+        System.out.println(sb.toString());
+    }
+
+
+
+    public String getOriginalCode(){
+        StringBuilder sb = new StringBuilder();
+        sb.append('<');
+        sb.append(buildRotorString());
+        sb.append('>');
+        sb.append('<');
+        sb.append(buildPositionString());
+        sb.append('>');
+        sb.append('<');
+        sb.append(buildReflectorString());
+        sb.append('>');
+        return sb.toString();
+
+    }
+
+    public String buildRotorString(){
+        StringBuilder sb = new StringBuilder();
+        Rotor[] rotors = enigmaEngine.getRotorsManagers().getRotors();
+        int index = rotors.length - 1;
+        for (int i = index; i >=0 ; i--) {
+            sb.append(rotors[i].getID());
+            sb.append(',');
+        }
+        sb.deleteCharAt(sb.length()-1);
+        return sb.toString();
+    }
+
+    public String buildPositionString(){
+        StringBuilder sb = new StringBuilder();
+        Rotor[] rotors = enigmaEngine.getRotorsManagers().getRotors();
+        int index = rotors.length - 1;
+        for (int i = index; i >=0 ; i--) {
+            sb.append(SM.getABC().charAt(rotors[i].getPosition()));
+            sb.append('(');
+            int res = rotors[i].getNoche() - rotors[i].getPosition();
+            sb.append(Utils.normalize(res, rotors[i].sizeABC));
+            sb.append(')');
+            sb.append(',');
+        }
+        sb.deleteCharAt(sb.length()-1);
+        return sb.toString();
+    }
+
+    public String buildReflectorString(){
+        return enigmaEngine.getReflectorId();
+    }
+
 
 }

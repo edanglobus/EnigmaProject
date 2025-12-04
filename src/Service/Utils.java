@@ -14,4 +14,11 @@ public class Utils {
         return alphabet.charAt(index);
     }
 
+    public static int normalize(int index, int size) {
+        int res = index % size;
+        if (res < 0) {
+            res += size;
+        }
+        return res;
     }
+}

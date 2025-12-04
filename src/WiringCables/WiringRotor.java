@@ -1,7 +1,7 @@
 package WiringCables;
 
 public class WiringRotor implements Wiring{
-    public   int [] wiringForwards;
+    public int [] wiringForwards;
     public int [] wiringBackwards;
 
 

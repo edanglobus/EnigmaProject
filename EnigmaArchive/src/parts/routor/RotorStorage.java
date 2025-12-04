@@ -7,7 +7,7 @@ import parts.PartsStorage;
 import java.util.Map;
 
 public class RotorStorage implements PartsStorage {
-    Map<Integer, Rotor> rotorMap;
+    private final Map<Integer, Rotor> rotorMap;
 
     public RotorStorage(Map<Integer, Rotor> routorMap) {
         this.rotorMap = routorMap;
@@ -19,6 +19,10 @@ public class RotorStorage implements PartsStorage {
 
     public boolean containsRotor(int id) {
         return rotorMap.containsKey(id);
+    }
+
+    public int getAmountOfRotors(){
+        return rotorMap.size();
     }
 
 

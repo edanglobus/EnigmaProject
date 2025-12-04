@@ -9,7 +9,7 @@ public class Rotor implements Roundable {
     private final int ID;
     private final int noche;
     private int position;
-    private final int sizeABC;
+    public final int sizeABC;
     //private final String alphabet;
 
 
@@ -88,6 +88,10 @@ public class Rotor implements Roundable {
 
     public void setPosition(int position) {
         this.position = position;
+    }
+
+    public WiringRotor getWiringRotor() {
+        return wiringRotor;
     }
 
     @Override
