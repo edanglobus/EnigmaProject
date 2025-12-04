@@ -50,7 +50,7 @@ public class ManualConfiguration {
         // Cast int to Character
         return positions.chars()              // Returns IntStream
                 .mapToObj(c -> (char) c)           // Cast int to Character
-                .toList();
+                .toList().reversed();
     }
 
     public Engine configureAndGetEngine() {
