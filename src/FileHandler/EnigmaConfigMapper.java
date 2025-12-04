@@ -30,7 +30,7 @@ public class EnigmaConfigMapper {
         for (RotorConfig rotorCfg : config.getRotors()) {
 
             int id = rotorCfg.getId();
-            int notch = rotorCfg.getNotch();
+            int notch = rotorCfg.getNotch() - 1;
 
             // 1. Build right and left columns as strings from the positioning list
             StringBuilder rightCol = new StringBuilder();
