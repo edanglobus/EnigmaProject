@@ -1,9 +1,11 @@
 import EnigmaHistory.ConfigurationStats;
 import FileHandler.EnigmaJaxbLoader;
-import Manual.ManualConfiguration;
 import Service.Engine;
 import Service.Rotor;
 import Service.Utils;
+import machineConfiguration.AutoConfig;
+import machineConfiguration.MachineConfig;
+import machineConfiguration.ManualConfig;
 import parts.StorageManager;
 
 import java.util.ArrayList;
@@ -36,11 +38,20 @@ public class MainManager {
         if (!isFileLoaded) {
             throw new UnsupportedOperationException("XML File Not Loaded Yet - Make Order 1 First");
         }
-        ManualConfiguration manualConfiguration = new ManualConfiguration(SM);
-        this.enigmaEngine = manualConfiguration.configureAndGetEngine();
+        MachineConfig machineConfiguration = new ManualConfig(SM);
+        this.enigmaEngine = machineConfiguration.configureAndGetEngine();
+    }
+
+    public void order4() {
+        if (!isFileLoaded) {
+            throw new UnsupportedOperationException("XML File Not Loaded Yet - Make Order 1 First");
+        }
+        MachineConfig machineConfiguration = new AutoConfig(SM);
+        this.enigmaEngine = machineConfiguration.configureAndGetEngine();
         ConfigurationStats state = new ConfigurationStats(getCode(true));
         fullHistory.add(state);
     }
+
 
     public void order5() {
         if (enigmaEngine == null) {

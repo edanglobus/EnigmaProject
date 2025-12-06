@@ -39,25 +39,6 @@ public class WiringRotor implements Wiring{
         }
     }
 
-    booolean isValidWiring(int[] wiring) {
-        boolean[] seen = new boolean[wiring.length];
-        for (int i = 0; i < wiring.length; i++) {
-            int target = wiring[i];
-            if (target < 0 || target >= wiring.length || seen[target]) {
-                return false;
-            }
-            seen[target] = true;
-        }
-        return true;
-    }
-
-
-
-
-
-
-
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

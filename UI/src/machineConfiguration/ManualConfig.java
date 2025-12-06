@@ -1,4 +1,4 @@
-package Manual;
+package machineConfiguration;
 
 import Service.Engine;
 import Service.Reflector;
@@ -10,16 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ManualConfiguration {
-    private final StorageManager storageManager;
+public class ManualConfig extends MachineConfig {
+    Scanner sc = new Scanner(System.in);
 
-    public ManualConfiguration(StorageManager SM) {
-        this.storageManager = SM;
+    public ManualConfig(parts.StorageManager SM) {
+        super(SM);
     }
 
     private List<Rotor> askRotors() {
         System.out.println("Enter rotors IDs separated by commas (left to right): ");
-        Scanner sc = new Scanner(System.in);
         String input = sc.nextLine().trim();
         String[] parts = input.split("\\s*,\\s*");
 
@@ -28,21 +27,18 @@ public class ManualConfiguration {
             int rotorId = Integer.parseInt(part);
             rotors.add(storageManager.optionalGetRotorByID(rotorId));
         }
-
         return rotors.reversed();
     }
 
     private Reflector askReflector() {
         System.out.println("which reflector do you want to use?");
-        Scanner sc = new Scanner(System.in);
         String input = sc.nextLine().trim();
         return storageManager.optionalGetReflectorByID(input);
     }
 
     private List<Character> askPositions() {
         System.out.println("Enter initial positions (letters, left to right, based on alphabet " + storageManager.getABC() + "):");
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine().trim().toUpperCase();
+        String input = sc.nextLine().trim().toUpperCase();
         return breakPositionString(input);
     }
 
@@ -54,6 +50,7 @@ public class ManualConfiguration {
                 .toList().reversed();
     }
 
+    @Override
     public Engine configureAndGetEngine() {
         List<Rotor> rotors = askRotors();
         List<Character> positions = askPositions();
@@ -65,6 +62,4 @@ public class ManualConfiguration {
         manager.setRotorPosition(indexOfPositions);
         return new Engine(reflector, manager, storageManager.getABC());
     }
-
 }
-

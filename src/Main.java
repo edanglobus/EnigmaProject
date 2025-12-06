@@ -5,20 +5,21 @@ public class Main {
         MainManager mainManager = new MainManager();
         Scanner sc = new Scanner(System.in);
         while (true) {
-            System.out.println("Choose an order:\n" +
-                    "1. Load XML file\n" +
-                    "2. Machine configuration\n" +
-                    "3. Manual Configuration\n" +
-                    "5. Encode/Decode String\n" +
-                    "6. Reset code to the initial configuration\n" +
-                    "7. Show history\n" +
-                    "8. Exit");
+            System.out.println("""
+                    Choose an order:
+                    1. Load XML file
+                    2. Machine configuration
+                    3. Manual Configuration
+                    4. Automatic Configuration
+                    5. Encode/Decode String
+                    0. Exit""");
             String choice = sc.nextLine().trim();
             try {
                 switch (choice) {
                     case "1" -> mainManager.order1();
                     case "2" -> mainManager.order2();
                     case "3" -> mainManager.order3();
+                    case "4" -> mainManager.order4();
                     case "5" -> mainManager.order5();
                     case "6" -> mainManager.order6();
                     case "7" -> mainManager.showHistory();
