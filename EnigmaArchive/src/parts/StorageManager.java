@@ -44,11 +44,14 @@ public class StorageManager {
             }
         }
 
-        return PCV.rotorIdsHasNoHoles();
+        return PCV.rotorIdsHasNoHoles() && PCV.reflectorIdsHasNoHoles();
     }
 
     private boolean validateABCLength() {
-        return EC.getAlphabet() != null && Utils.normalize(ABC.length(), 2) == 0;
+        if (EC.getAlphabet() != null && Utils.normalize(ABC.length(), 2) != 0) {
+            throw new IllegalArgumentException("Alphabet length must be even.");
+        }
+        return true;
     }
 
     private boolean validateSupply() {
@@ -57,11 +60,11 @@ public class StorageManager {
 
 
     private void buildStorages() {
-        if (this.ValidSupply) {
+        try {
             RS = new RotorStorage(ECM.buildRouters());
             RFS = new ReflectorStorage(ECM.buildReflectors());
-        } else {
-            throw new IllegalStateException("Cannot build storages due to invalid configuration.");
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Failed to build storages: " + e.getMessage());
         }
     }
 
@@ -150,5 +153,16 @@ public class StorageManager {
 
     public List<Character> getOriginalPosition() {
         return originalPosition;
+    }
+
+    public void resetStorages() {
+        this.RS = null;
+        this.RFS = null;
+        this.EC = null;
+        this.ECM = null;
+        this.ABC = null;
+        this.originalPosition = null;
+        this.ValidSupply = false;
+        this.PCV.reset();
     }
 }

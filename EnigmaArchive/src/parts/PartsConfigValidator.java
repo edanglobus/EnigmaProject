@@ -30,9 +30,10 @@ public class PartsConfigValidator {
 
     public boolean runReflectorValidation(ReflectorConfig reflector) {
         int id = reflector.getID();
-        boolean pass = false;
-        pass = idInRange(1,5, id) && reflectorIdNotUsed(reflector);
-        return pass;
+        if (id == -1) {
+            throw new IllegalArgumentException("Reflector ID: " + reflector.getId() + " is invalid.");
+        }
+        return reflectorIdNotUsed(reflector);
     }
 
     private boolean rotorIdNotUsed(RotorConfig rotor) {
@@ -40,14 +41,14 @@ public class PartsConfigValidator {
             usedRoutorIds.add(rotor.getID());
             return true;
         }
-        return false;
+        throw new IllegalArgumentException("Rotor ID: " + rotor.getID() + " is used more than once.");
     }
-    private boolean reflectorIdNotUsed(ReflectorConfig rotor) {
-        if (!usedReflectorIds.contains(rotor.getID())) {
-            usedReflectorIds.add(rotor.getID());
+    private boolean reflectorIdNotUsed(ReflectorConfig reflector) {
+        if (!usedReflectorIds.contains(reflector.getID())) {
+            usedReflectorIds.add(reflector.getID());
             return true;
         }
-        return false;
+        throw new IllegalArgumentException("Reflector ID: " + reflector.getID() + " is used more than once.");
     }
 
     private boolean idInRange(int from, int to, int id) {
@@ -57,9 +58,23 @@ public class PartsConfigValidator {
     public boolean rotorIdsHasNoHoles() {
         for (int i = 1; i <= usedRoutorIds.size(); i++) {
             if (!usedRoutorIds.contains(i)) {
-                return false;
+                throw new IllegalArgumentException("Rotor IDs have holes. Missing ID: " + i);
             }
         }
         return true;
+    }
+
+    public boolean reflectorIdsHasNoHoles() {
+        for (int i = 1; i <= usedReflectorIds.size(); i++) {
+            if (!usedReflectorIds.contains(i)) {
+                throw new IllegalArgumentException("Reflector IDs have holes. Missing ID: " + i);
+            }
+        }
+        return true;
+    }
+
+    public void reset() {
+        usedRoutorIds.clear();
+        usedReflectorIds.clear();
     }
 }

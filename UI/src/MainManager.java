@@ -26,12 +26,22 @@ public class MainManager {
 
 
     public void order1() throws Exception {
-        System.out.println("Supply XML path:");
-        Scanner sc = new Scanner(System.in);
-        String path = sc.nextLine().trim(); //to check path
+        try {
+            System.out.println("Supply XML path:");
+            Scanner sc = new Scanner(System.in);
+            String path = sc.nextLine().trim(); //to check path
 
-        SM.loadSupplyXMLCheckAndBuildStorages(path);
-        isFileLoaded = true;
+            SM.loadSupplyXMLCheckAndBuildStorages(path);
+            isFileLoaded = true;
+        }
+        catch (IllegalArgumentException iae){
+            SM.resetStorages();
+            throw new Exception("Invalid XML file: " + iae.getMessage());
+        }
+        catch (Exception e) {
+            SM.resetStorages();
+            throw new Exception("Failed to load XML file: " + e.getMessage());
+        }
     }
 
     public void order3() {
@@ -158,6 +168,8 @@ public class MainManager {
         sb.deleteCharAt(sb.length() - 1);
         return sb.toString();
     }
+
+
 
     public void showHistory() {
         if (fullHistory.isEmpty()) {
