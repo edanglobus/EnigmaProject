@@ -33,7 +33,9 @@ public class rotorsManagers {
        int sizeABC = rotors[0].sizeABC;
         for (int i = 0; i < rotors.length - 1; i++) {
             if (rotors[i].getNoche() == rotors[i].getPosition()) {
+                System.out.printf("Rotor State Before:   Rotor ID: %d, Position: %d, Noche: %d\n", rotors[i+1].getID(), rotors[i+1].getPosition(), rotors[i+1].getNoche());
                 rotors[i + 1].rotate();
+                System.out.printf("Rotor State After:   Rotor ID: %d, Position: %d, Noche: %d\n", rotors[i+1].getID(), rotors[i+1].getPosition(), rotors[i+1].getNoche());
             } else {
                 break;
             }
@@ -44,34 +46,44 @@ public class rotorsManagers {
         int signal = index;
 
         for (Rotor rotor : rotors) {
+            System.out.printf("     Passing through Rotor ID: %d, Position: %d, Noche: %d\n", rotor.getID(), rotor.getPosition(), rotor.getNoche());
+            System.out.printf("             Input Char: %c (index %d)\n", Utils.MapNumToABC(signal), signal);
             signal = rotor.encodeForward(signal);
+            System.out.printf("             Output Char: %c (index %d)\n", Utils.MapNumToABC(signal), signal);
         }
 
-        return signal;
+        return signal ;
     }
     //passing the signal through the rotors from left to right
     public int passBackward(int index) {
         int signal = index;
-        String check = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         for (int i = rotors.length - 1; i >= 0; i--) {
-            WiringRotor wiringRotor = rotors[i].getWiringRotor();
-            int res2 = wiringRotor.wiringBackwards[signal];
+            System.out.printf("     Passing through Rotor ID: %d, Position: %d, Noche: %d\n", rotors[i].getID(), rotors[i].getPosition(), rotors[i].getNoche());
+            System.out.printf("             Input Char: %c (index %d)\n", Utils.MapNumToABC(signal), signal);
             signal = rotors[i].encodeBackward(signal);
-            int res = wiringRotor.wiringBackwards[signal];
+            System.out.printf("             Output Char: %c (index %d)\n", Utils.MapNumToABC(signal), signal);
         }
         return signal;
     }
 
     public void printRotorsState(){
         for (Rotor rotor : rotors) {
-
-
             System.out.printf("Rotor ID: %d, Position: %d, Noche: %d\n", rotor.getID(), rotor.getPosition(), rotor.getNoche());
         }
     }
 
     public Rotor[] getRotors() {
         return rotors;
+    }
+
+    public List<Integer> MappingInputCharPositionByRightColumnToIndex(List<Character> Inputs) {
+        List<Integer> positions = new java.util.ArrayList<>();
+        int index = 0;
+        for (Rotor rotor : rotors) {
+            positions.add(rotor.getWiringRotor().getIndexOfChInRightColumn(Inputs.get(index)));
+            index++;
+        }
+        return positions;
     }
 }
 

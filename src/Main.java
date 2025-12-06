@@ -1,9 +1,14 @@
+import javax.xml.xpath.XPath;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         MainManager mainManager = new MainManager();
         Scanner sc = new Scanner(System.in);
+
+        String out = "HELLOWORLD --> DLTBBQVPQV";
+        String path = "C:\\Users\\Edan Globus\\OneDrive\\Desktop\\ex1-sanity-paper-enigma.xml";
+
         while (true) {
             System.out.println("""
                     Choose an order:
@@ -12,6 +17,8 @@ public class Main {
                     3. Manual Configuration
                     4. Automatic Configuration
                     5. Encode/Decode String
+                    6. Reset to the original code
+                    7. Show history
                     0. Exit""");
             String choice = sc.nextLine().trim();
             try {

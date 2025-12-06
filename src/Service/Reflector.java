@@ -15,6 +15,7 @@ public class Reflector  {
     }
 
     public int reflect(int index){
+        System.out.printf("             Reflecting input Char: %c %d\n",Utils.MapNumToABC(index) , index);
         return wiringReflactor.wiringRef[index];
     }
 

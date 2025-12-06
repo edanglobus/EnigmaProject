@@ -36,7 +36,7 @@ public class AutoConfig extends MachineConfig {
         List<Integer> usedIndices = new ArrayList<>();
 
         while (selectedRotors.size() < count) {
-            int randomIndex = getRandomIntInRange(0, storageManager.getRotorsAmount());
+            int randomIndex = getRandomIntInRange(1, storageManager.getRotorsAmount());
             if (!usedIndices.contains(randomIndex)) {
                 usedIndices.add(randomIndex);
                 selectedRotors.add(storageManager.optionalGetRotorByID(randomIndex));
@@ -46,7 +46,7 @@ public class AutoConfig extends MachineConfig {
     }
 
     private Reflector getRandomReflector() {
-        int reflectorId = getRandomIntInRange(0, storageManager.getReflectorsAmount());
+        int reflectorId = getRandomIntInRange(1, storageManager.getReflectorsAmount());
         return storageManager.optionalGetReflectorByID(String.valueOf(reflectorId));
     }
 
@@ -68,9 +68,10 @@ public class AutoConfig extends MachineConfig {
         List<Character> positions = generateRandomPositions(rotorsCount);
         storageManager.setOriginalPosition(positions);
         Reflector reflector = getRandomReflector();
-        List<Integer> indexOfPositions = storageManager.getIndexInABC(positions);
+
 
         rotorsManagers manager = new rotorsManagers(rotors.toArray(new Rotor[0]));
+        List<Integer> indexOfPositions = manager.MappingInputCharPositionByRightColumnToIndex(positions);
         manager.setRotorPosition(indexOfPositions);
         return new Engine(reflector, manager, storageManager.getABC());
     }
