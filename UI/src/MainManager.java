@@ -1,3 +1,4 @@
+import EnigmaHistory.ConfigurationStats;
 import FileHandler.EnigmaJaxbLoader;
 import Manual.ManualConfiguration;
 import Service.Engine;
@@ -5,6 +6,7 @@ import Service.Rotor;
 import Service.Utils;
 import parts.StorageManager;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,6 +16,7 @@ public class MainManager {
     private final StorageManager SM = new StorageManager(Loader);
     private String path;
     private Engine enigmaEngine;
+    List<ConfigurationStats> fullHistory = new ArrayList<>();
 
 
 
@@ -35,6 +38,8 @@ public class MainManager {
         }
         ManualConfiguration manualConfiguration = new ManualConfiguration(SM);
         this.enigmaEngine = manualConfiguration.configureAndGetEngine();
+        ConfigurationStats state = new ConfigurationStats(getCode(true));
+        fullHistory.add(state);
     }
 
     public void order5() {
@@ -44,8 +49,22 @@ public class MainManager {
         System.out.printf("Write the string you want to encode/decode:\n");
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine().trim().toUpperCase();
-        String chiper = enigmaEngine.processString(input);
-        System.out.printf("The result is:\n%s\n", chiper);
+        //start measure time
+        long start = System.nanoTime();
+
+        String cipher = enigmaEngine.processString(input);
+        //end measure time
+        long end = System.nanoTime();
+
+        System.out.printf("The result is:\n%s\n", cipher);
+
+        if (!fullHistory.isEmpty()) {
+           //pull the last configuration stats
+            ConfigurationStats currentStats = fullHistory.getLast();
+            //add the string to the history
+            currentStats.addProcessedString(input, cipher, (end - start));
+        }
+
     }
 
     public void order2(){
@@ -67,7 +86,20 @@ public class MainManager {
         System.out.println(sb.toString());
     }
 
+    public void order6(){
+        if (enigmaEngine == null) {
+            throw new UnsupportedOperationException("Engine Not Configured Yet - Make Order 3/4 First");
+        }
+        Rotor[] rotors = enigmaEngine.getRotorsManagers().getRotors();
+        List<Character> originalPosition = SM.getOriginalPosition();
+        for (int i = 0; i < rotors.length; i++) {
+            rotors[i].setPosition(Utils.charToIndex(originalPosition.get(i), SM.getABC()));
+        }
+    }
 
+    public void order7(){
+        showHistory();
+    }
 
     public  String getCode(boolean original) {
 
@@ -95,13 +127,9 @@ public class MainManager {
         return sb.toString();
     }
 
-
-
     public  String buildReflectorString(){
         return enigmaEngine.getReflectorId();
     }
-
-
 
     public String buildPositionString(boolean original) {
         StringBuilder sb = new StringBuilder();
@@ -118,5 +146,17 @@ public class MainManager {
         }
         sb.deleteCharAt(sb.length() - 1);
         return sb.toString();
+    }
+
+    public void showHistory() {
+        if (fullHistory.isEmpty()) {
+            System.out.println("No history found. The machine hasn't been configured yet.");
+            return;
+        }
+        System.out.println("History:\n");
+        for (ConfigurationStats stats : fullHistory) {
+            System.out.println(stats);
+            System.out.println("----------------------------------------");
+        }
     }
 }

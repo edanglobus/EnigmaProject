@@ -56,12 +56,8 @@ public class rotorsManagers {
         for (int i = rotors.length - 1; i >= 0; i--) {
             WiringRotor wiringRotor = rotors[i].getWiringRotor();
             int res2 = wiringRotor.wiringBackwards[signal];
-            System.out.println(check.charAt(res2) + "index in: " + signal);
-
             signal = rotors[i].encodeBackward(signal);
-
             int res = wiringRotor.wiringBackwards[signal];
-            System.out.println(check.charAt(res) + "index out: " + signal);
         }
         return signal;
     }

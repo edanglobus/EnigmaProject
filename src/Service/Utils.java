@@ -10,7 +10,7 @@ public class Utils {
 
     // Convert index to letter
     public static char indexToChar(int index, String alphabet) {
-        index = ((index % alphabet.length()) + alphabet.length()) % alphabet.length();
+        index = normalize(index, alphabet.length());
         return alphabet.charAt(index);
     }
 
