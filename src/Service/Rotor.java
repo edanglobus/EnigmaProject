@@ -22,11 +22,7 @@ public class Rotor implements Roundable {
     }
 
     private int normalize(int index) {
-        int res = index % sizeABC;
-        if (res < 0) {
-            res += sizeABC;
-        }
-        return res;
+        return Utils.normalize(index, sizeABC);
     }
 
     public void setWiring(WiringRotor connection) {
@@ -75,7 +71,7 @@ public class Rotor implements Roundable {
 
     @Override
     public void rotate (){
-        this.position = (this.position + 1) % sizeABC;
+        this.position = Utils.normalize(this.position + 1, sizeABC);
     }
 
     public int getNoche() {

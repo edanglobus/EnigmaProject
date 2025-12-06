@@ -18,6 +18,7 @@ public class StorageManager {
     private RotorStorage RS;
     private ReflectorStorage RFS;
     private String ABC;
+    private List<Character>  originalPosition;
 
 
     public StorageManager(EnigmaJaxbLoader loader) {
@@ -132,5 +133,11 @@ public class StorageManager {
         return RFS.getPartCount();
     }
 
+    public void setOriginalPosition(List<Character> originalPosition) {
+        this.originalPosition = originalPosition;
+    }
 
+    public List<Character> getOriginalPosition() {
+        return originalPosition;
+    }
 }

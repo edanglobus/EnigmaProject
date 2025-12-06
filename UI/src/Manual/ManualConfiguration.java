@@ -56,6 +56,7 @@ public class ManualConfiguration {
     public Engine configureAndGetEngine() {
         List<Rotor> rotors = askRotors();
         List<Character> positions = askPositions();
+        storageManager.setOriginalPosition(positions);
         Reflector reflector = askReflector();
         List<Integer> indexOfPositions = storageManager.getIndexInABC(positions);
 

@@ -5,6 +5,7 @@ import Service.Rotor;
 import Service.Utils;
 import parts.StorageManager;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class MainManager {
@@ -59,29 +60,31 @@ public class MainManager {
         sb.append("amount of string that encoded: ");
         sb.append(enigmaEngine.getNumberOfEncryptions());
         sb.append("\n");
-        sb.append("Original code: ");
-        sb.append(getOriginalCode());
+        sb.append("Original positions: ");
+        sb.append(getCode(true));
+        sb.append("\n");
+        sb.append("Current code: ");
+        sb.append(getCode(false));
         System.out.println(sb.toString());
     }
 
 
 
-    public String getOriginalCode(){
-        StringBuilder sb = new StringBuilder();
-        sb.append('<');
-        sb.append(buildRotorString());
-        sb.append('>');
-        sb.append('<');
-        sb.append(buildPositionString());
-        sb.append('>');
-        sb.append('<');
-        sb.append(buildReflectorString());
-        sb.append('>');
-        return sb.toString();
+    public  String getCode(boolean original) {
+
+
+        return '<' + buildRotorString() +
+                '>' +
+                '<' +
+                buildPositionString(original) +
+                '>' +
+                '<' +
+                buildReflectorString() +
+                '>';
 
     }
 
-    public String buildRotorString(){
+    public  String buildRotorString(){
         StringBuilder sb = new StringBuilder();
         Rotor[] rotors = enigmaEngine.getRotorsManagers().getRotors();
         int index = rotors.length - 1;
@@ -93,25 +96,28 @@ public class MainManager {
         return sb.toString();
     }
 
-    public String buildPositionString(){
-        StringBuilder sb = new StringBuilder();
-        Rotor[] rotors = enigmaEngine.getRotorsManagers().getRotors();
-        int index = rotors.length - 1;
-        for (int i = index; i >=0 ; i--) {
-            sb.append(SM.getABC().charAt(rotors[i].getPosition()));
-            sb.append('(');
-            int res = rotors[i].getNoche() - rotors[i].getPosition();
-            sb.append(Utils.normalize(res, rotors[i].sizeABC));
-            sb.append(')');
-            sb.append(',');
-        }
-        sb.deleteCharAt(sb.length()-1);
-        return sb.toString();
-    }
 
-    public String buildReflectorString(){
+
+    public  String buildReflectorString(){
         return enigmaEngine.getReflectorId();
     }
 
 
+
+    public String buildPositionString(boolean original) {
+        StringBuilder sb = new StringBuilder();
+        Rotor[] rotors = enigmaEngine.getRotorsManagers().getRotors();
+        List<Character> originalPosition = SM.getOriginalPosition();
+        int index = rotors.length - 1;
+        for (int i = index; i >= 0; i--) {
+            sb.append(original ? originalPosition.get(i) : SM.getABC().charAt(rotors[i].getPosition()));
+            sb.append('(');
+            int res = rotors[i].getNoche() - (original ? Utils.charToIndex(originalPosition.get(i), SM.getABC()) : rotors[i].getPosition());
+            sb.append(Utils.normalize(res, rotors[i].sizeABC));
+            sb.append(')');
+            sb.append(',');
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        return sb.toString();
+    }
 }

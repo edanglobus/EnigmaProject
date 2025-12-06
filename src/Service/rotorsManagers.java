@@ -30,8 +30,9 @@ public class rotorsManagers {
 
     //check if the rotors need to rotate the next rotor
     public void checkRotate(){
+       int sizeABC = rotors[0].sizeABC;
         for (int i = 0; i < rotors.length - 1; i++) {
-            if (((rotors[i].getNoche()) % rotors[i].sizeABC) == rotors[i].getPosition()) {
+            if (rotors[i].getNoche() == rotors[i].getPosition()) {
                 rotors[i + 1].rotate();
             } else {
                 break;
