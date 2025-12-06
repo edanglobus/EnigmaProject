@@ -20,10 +20,14 @@ public class PartsConfigValidator {
     public boolean runRotorValidation(RotorConfig rotor) {
         int id = rotor.getID();
         List<PositioningConfig> wires = rotor.getWires();
-        boolean pass = false;
+
+
+
+        boolean pass;
         pass = idInRange(1,Integer.MAX_VALUE, id) && rotorIdNotUsed(rotor);
         return pass;
     }
+
     public boolean runReflectorValidation(ReflectorConfig reflector) {
         int id = reflector.getID();
         boolean pass = false;
@@ -48,5 +52,14 @@ public class PartsConfigValidator {
 
     private boolean idInRange(int from, int to, int id) {
         return id >= from && id <= to;
+    }
+
+    public boolean rotorIdsHasNoHoles() {
+        for (int i = 1; i <= usedRoutorIds.size(); i++) {
+            if (!usedRoutorIds.contains(i)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

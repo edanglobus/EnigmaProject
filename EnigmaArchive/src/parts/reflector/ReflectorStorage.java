@@ -50,7 +50,7 @@ public class ReflectorStorage implements PartsStorage {
             case "3" -> "III";
             case "4" -> "IV";
             case "5" -> "V";
-            default -> throw new IllegalArgumentException("Invalid rotor ID: " + id);
+            default -> throw new IllegalArgumentException("Invalid reflector ID: " + id);
         };
     }
 

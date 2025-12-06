@@ -36,4 +36,7 @@ public class Reflector  {
                 "    Wiring:\n" + wiringReflactor;
     }
 
+    public String getID() {
+        return ID;
+    }
 }

@@ -1,21 +1,29 @@
-
 import java.util.Scanner;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
         MainManager mainManager = new MainManager();
         Scanner sc = new Scanner(System.in);
         while (true) {
-            System.out.println("Choose an order:\n1. Load XML file\n3. Manual Configuration\n5. Encode/Decode String\n0. Exit");
+            System.out.println("""
+                    Choose an order:
+                    1. Load XML file
+                    2. Machine configuration
+                    3. Manual Configuration
+                    4. Automatic Configuration
+                    5. Encode/Decode String
+                    0. Exit""");
             String choice = sc.nextLine().trim();
             try {
                 switch (choice) {
                     case "1" -> mainManager.order1();
+                    case "2" -> mainManager.order2();
                     case "3" -> mainManager.order3();
+                    case "4" -> mainManager.order4();
                     case "5" -> mainManager.order5();
-                    case "0" -> {
+                    case "6" -> mainManager.order6();
+                    case "7" -> mainManager.showHistory();
+                    case "8" -> {
                         System.out.println("Exiting program.");
                         return;
                     }

@@ -9,24 +9,23 @@ public class Rotor implements Roundable {
     private final int ID;
     private final int noche;
     private int position;
-    private final int sizeABC;
+    public final int sizeABC;
     //private final String alphabet;
 
 
     public Rotor(int ID, int noche, int  ABCSize, WiringRotor wiring) {
         this.ID = ID;
         this.noche = noche;
+        if (noche < 0 || noche >= ABCSize) {
+            throw new IllegalArgumentException("Notch position out of bounds");
+        }
         this.sizeABC = ABCSize;
         this.wiringRotor = wiring;
         this.position = 0;
     }
 
     private int normalize(int index) {
-        int res = index % sizeABC;
-        if (res < 0) {
-            res += sizeABC;
-        }
-        return res;
+        return Utils.normalize(index, sizeABC);
     }
 
     public void setWiring(WiringRotor connection) {
@@ -75,7 +74,7 @@ public class Rotor implements Roundable {
 
     @Override
     public void rotate (){
-        this.position = (this.position + 1) % sizeABC;
+        this.position = Utils.normalize(this.position + 1, sizeABC);
     }
 
     public int getNoche() {
@@ -88,6 +87,10 @@ public class Rotor implements Roundable {
 
     public void setPosition(int position) {
         this.position = position;
+    }
+
+    public WiringRotor getWiringRotor() {
+        return wiringRotor;
     }
 
     @Override
