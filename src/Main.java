@@ -11,7 +11,8 @@ public class Main {
                     "2. Machine configuration\n" +
                     "3. Manual Configuration\n" +
                     "5. Encode/Decode String\n" +
-                    "6. Reset code to the initial configuration" +
+                    "6. Reset code to the initial configuration\n" +
+                    "7. Show history\n" +
                     "8. Exit");
             String choice = sc.nextLine().trim();
             try {
@@ -21,6 +22,7 @@ public class Main {
                     case "3" -> mainManager.order3();
                     case "5" -> mainManager.order5();
                     case "6" -> mainManager.order6();
+                    case "7" -> mainManager.showHistory();
                     case "8" -> {
                         System.out.println("Exiting program.");
                         return;

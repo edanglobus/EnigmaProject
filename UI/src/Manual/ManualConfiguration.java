@@ -60,8 +60,6 @@ public class ManualConfiguration {
         Reflector reflector = askReflector();
         List<Integer> indexOfPositions = storageManager.getIndexInABC(positions);
 
-
-
         rotorsManagers manager = new rotorsManagers(rotors.toArray(new Rotor[0]));
         manager.setRotorPosition(indexOfPositions);
         return new Engine(reflector, manager, storageManager.getABC());
