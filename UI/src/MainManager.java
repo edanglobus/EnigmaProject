@@ -46,7 +46,6 @@ public class MainManager {
         String input = sc.nextLine().trim().toUpperCase();
         String chiper = enigmaEngine.processString(input);
         System.out.printf("The result is:\n%s\n", chiper);
-
     }
 
     public void order2(){
