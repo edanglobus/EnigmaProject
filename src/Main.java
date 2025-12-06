@@ -12,6 +12,8 @@ public class Main {
                     3. Manual Configuration
                     4. Automatic Configuration
                     5. Encode/Decode String
+                    6. Reset to the original code
+                    7. Show history
                     0. Exit""");
             String choice = sc.nextLine().trim();
             try {

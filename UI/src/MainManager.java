@@ -40,6 +40,8 @@ public class MainManager {
         }
         MachineConfig machineConfiguration = new ManualConfig(SM);
         this.enigmaEngine = machineConfiguration.configureAndGetEngine();
+        ConfigurationStats state = new ConfigurationStats(getCode(true));
+        fullHistory.add(state);
     }
 
     public void order4() {
@@ -161,10 +163,10 @@ public class MainManager {
 
     public void showHistory() {
         if (fullHistory.isEmpty()) {
-            System.out.println("No history found. The machine hasn't been configured yet.");
+            System.out.println("\nNo history found. The machine hasn't been configured yet.");
             return;
         }
-        System.out.println("History:\n");
+        System.out.println("\nHistory:\n");
         for (ConfigurationStats stats : fullHistory) {
             System.out.println(stats);
             System.out.println("----------------------------------------");
