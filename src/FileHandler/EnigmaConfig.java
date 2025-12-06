@@ -31,6 +31,9 @@ public class EnigmaConfig {
     }
 
     public List<RotorConfig> getRotors() {
+        if (rotors.size() < 3) {
+            throw new IllegalArgumentException("The number of rotors must be at least 3");
+        }
         return rotors;
     }
 

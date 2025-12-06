@@ -27,6 +27,8 @@ public class EnigmaConfigMapper {
         String alphabet = config.getAlphabet();
         Map<Integer, Rotor> rotors = new HashMap<>();
 
+        if (config.getRotors())
+
         for (RotorConfig rotorCfg : config.getRotors()) {
 
             int id = rotorCfg.getId();

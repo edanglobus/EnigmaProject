@@ -1,4 +1,4 @@
-package Manual;
+package machineConfiguration;
 
 import Service.Engine;
 import parts.StorageManager;
