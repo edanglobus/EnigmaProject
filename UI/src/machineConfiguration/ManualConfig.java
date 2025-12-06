@@ -56,9 +56,10 @@ public class ManualConfig extends MachineConfig {
         List<Character> positions = askPositions();
         storageManager.setOriginalPosition(positions);
         Reflector reflector = askReflector();
-        List<Integer> indexOfPositions = storageManager.getIndexInABC(positions);
+
 
         rotorsManagers manager = new rotorsManagers(rotors.toArray(new Rotor[0]));
+        List<Integer> indexOfPositions = manager.MappingInputCharPositionByRightColumnToIndex(positions);
         manager.setRotorPosition(indexOfPositions);
         return new Engine(reflector, manager, storageManager.getABC());
     }

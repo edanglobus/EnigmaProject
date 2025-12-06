@@ -1,11 +1,18 @@
 package WiringCables;
 
 public class WiringRotor implements Wiring{
+    private String alphabet;
+    private String rightColumn;
+    private String leftColumn;
+
     public int [] wiringForwards;
     public int [] wiringBackwards;
 
 
     public WiringRotor(String rightColumn, String leftColumn, String alphabet) {
+        this.alphabet = alphabet;
+        this.rightColumn = rightColumn;
+        this.leftColumn = leftColumn;
         this.wiringForwards = new int[alphabet.length()];
         this.wiringBackwards = new int[alphabet.length()];
 
@@ -49,5 +56,9 @@ public class WiringRotor implements Wiring{
             }
         }
         return sb.toString();
+    }
+
+    public int getIndexOfChInRightColumn(char ch){
+        return rightColumn.indexOf(ch);
     }
 }

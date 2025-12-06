@@ -24,10 +24,16 @@ public class Engine {
         if (index == -1) {
             throw new IllegalArgumentException("Char '" + ch + "' not in alphabet");
         }
+        System.out.printf("\nProcessing char: %c (index %d)\n", ch, index);
         manager.stepRotors();
         int signal = manager.passForward(index);
+        System.out.printf("Char after rotors forward pass: %c  (index %d)\n", Utils.MapNumToABC(signal), signal);
         signal = reflector.reflect(signal);
+        System.out.printf("             Reflecting output Char: %c %d\n",Utils.MapNumToABC(index) , index);
+
+        System.out.printf("Char after reflector: %c  (index %d)\n", Utils.MapNumToABC(signal), signal);
         signal = manager.passBackward(signal);
+        System.out.printf("Char after rotors backward pass: %c  (index %d)\n", Utils.MapNumToABC(signal), signal);
         return alphabet.charAt(signal);
     }
 

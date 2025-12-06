@@ -106,7 +106,7 @@ public class MainManager {
         Rotor[] rotors = enigmaEngine.getRotorsManagers().getRotors();
         List<Character> originalPosition = SM.getOriginalPosition();
         for (int i = 0; i < rotors.length; i++) {
-            rotors[i].setPosition(Utils.charToIndex(originalPosition.get(i), SM.getABC()));
+            rotors[i].setPosition(rotors[i].getWiringRotor().getIndexOfChInRightColumn(originalPosition.get(i)));
         }
     }
 
