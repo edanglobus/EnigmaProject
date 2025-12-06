@@ -4,6 +4,7 @@ package parts;
 import FileHandler.*;
 import Service.Reflector;
 import Service.Rotor;
+import Service.Utils;
 import parts.reflector.ReflectorStorage;
 import parts.routor.RotorStorage;
 
@@ -19,6 +20,7 @@ public class StorageManager {
     private ReflectorStorage RFS;
     private String ABC;
     private List<Character>  originalPosition;
+    private boolean ValidSupply;
 
 
     public StorageManager(EnigmaJaxbLoader loader) {
@@ -42,12 +44,20 @@ public class StorageManager {
             }
         }
 
-        return true;
+        return PCV.rotorIdsHasNoHoles();
     }
 
+    private boolean validateABCLength() {
+        return EC.getAlphabet() != null && Utils.normalize(ABC.length(), 2) == 0;
+    }
+
+    private boolean validateSupply() {
+        return validateABCLength() && validatePartsConfig() && EC.validateWires();
+    }
+
+
     private void buildStorages() {
-        boolean canBuild = validatePartsConfig() && EC.validateWires();
-        if (canBuild) {
+        if (this.ValidSupply) {
             RS = new RotorStorage(ECM.buildRouters());
             RFS = new ReflectorStorage(ECM.buildReflectors());
         } else {
@@ -64,6 +74,7 @@ public class StorageManager {
 
     public void loadSupplyXMLCheckAndBuildStorages(String path) throws Exception {
         loadSupplyFromXML(path);
+        this.ValidSupply = validateSupply();
         buildStorages();
     }
 

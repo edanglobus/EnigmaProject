@@ -16,6 +16,9 @@ public class Rotor implements Roundable {
     public Rotor(int ID, int noche, int  ABCSize, WiringRotor wiring) {
         this.ID = ID;
         this.noche = noche;
+        if (noche < 0 || noche >= ABCSize) {
+            throw new IllegalArgumentException("Notch position out of bounds");
+        }
         this.sizeABC = ABCSize;
         this.wiringRotor = wiring;
         this.position = 0;

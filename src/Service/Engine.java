@@ -13,6 +13,10 @@ public class Engine {
         this.reflector = reflector;
         this.manager = manager;
         this.alphabet = alphabet;
+
+        if (manager.getRotors().length < 3) {
+            throw new IllegalArgumentException("At least 3 rotors are required to initialize the engine.");
+        }
     }
 
     public char processChar(char ch) {

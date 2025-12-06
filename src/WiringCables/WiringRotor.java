@@ -9,24 +9,54 @@ public class WiringRotor implements Wiring{
         this.wiringForwards = new int[alphabet.length()];
         this.wiringBackwards = new int[alphabet.length()];
 
+        // Wires in the columns must match the alphabet size
         if (rightColumn.length() != alphabet.length() || leftColumn.length() != alphabet.length()) {
             throw new IllegalArgumentException("Columns must match alphabet size");
         }
+
         for (int i = 0; i < alphabet.length(); i++) {
             char letter = alphabet.charAt(i);
+            // Check for duplicate letters in the alphabet
+            if (rightColumn.indexOf(letter) != rightColumn.lastIndexOf(letter) ||
+                    leftColumn.indexOf(letter) != leftColumn.lastIndexOf(letter)) {
+                throw new IllegalArgumentException(
+                        "Letter '" + letter + "' appears multiple times in a column");
+            }
+
 
             int rightIndex = rightColumn.indexOf(letter); //find the letter in the right column
             int leftIndex = leftColumn.indexOf(letter);  // find the letter in the left column
 
+            // Ensure the letter exists in both columns
             if (rightIndex == -1 || leftIndex == -1) {
                 throw new IllegalArgumentException(
                         "Letter '" + letter + "' must appear in both columns");
             }
+
             //connect the wire
             this.wiringForwards[rightIndex] = leftIndex;
             this.wiringBackwards[leftIndex] = rightIndex;
         }
     }
+
+    booolean isValidWiring(int[] wiring) {
+        boolean[] seen = new boolean[wiring.length];
+        for (int i = 0; i < wiring.length; i++) {
+            int target = wiring[i];
+            if (target < 0 || target >= wiring.length || seen[target]) {
+                return false;
+            }
+            seen[target] = true;
+        }
+        return true;
+    }
+
+
+
+
+
+
+
 
     @Override
     public String toString() {

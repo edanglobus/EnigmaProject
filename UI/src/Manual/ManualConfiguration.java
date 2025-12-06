@@ -28,6 +28,7 @@ public class ManualConfiguration {
             int rotorId = Integer.parseInt(part);
             rotors.add(storageManager.optionalGetRotorByID(rotorId));
         }
+
         return rotors.reversed();
     }
 
