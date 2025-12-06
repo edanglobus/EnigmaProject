@@ -68,7 +68,16 @@ public class MainManager {
         System.out.println(sb.toString());
     }
 
-
+    public void order6(){
+        if (enigmaEngine == null) {
+            throw new UnsupportedOperationException("Engine Not Configured Yet - Make Order 3/4 First");
+        }
+        Rotor[] rotors = enigmaEngine.getRotorsManagers().getRotors();
+        List<Character> originalPosition = SM.getOriginalPosition();
+        for (int i = 0; i < rotors.length; i++) {
+            rotors[i].setPosition(Utils.charToIndex(originalPosition.get(i), SM.getABC()));
+        }
+    }
 
     public  String getCode(boolean original) {
 
