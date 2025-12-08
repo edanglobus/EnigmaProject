@@ -6,9 +6,6 @@ public class Main {
         MainManager mainManager = new MainManager();
         Scanner sc = new Scanner(System.in);
 
-        String out = "HELLOWORLD --> DLTBBQVPQV";
-        String path = "C:\\Users\\Edan Globus\\OneDrive\\Desktop\\ex1-sanity-paper-enigma.xml";
-
         while (true) {
             System.out.println("""
                     Choose an order:
@@ -19,7 +16,7 @@ public class Main {
                     5. Encode/Decode String
                     6. Reset to the original code
                     7. Show history
-                    0. Exit""");
+                    8. Exit""");
             String choice = sc.nextLine().trim();
             try {
                 switch (choice) {

@@ -44,6 +44,25 @@ public class MainManager {
         }
     }
 
+    public void order2(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Amount of rotors: ");
+        sb.append(SM.getRotorsAmount());
+        sb.append("\n");
+        sb.append("Amount of reflectors: ");
+        sb.append(SM.getReflectorsAmount());
+        sb.append("\n");
+        sb.append("amount of string that encoded: ");
+        sb.append(enigmaEngine != null ? enigmaEngine.getNumberOfEncryptions() : 0);
+        sb.append("\n");
+        sb.append("Original positions: ");
+        sb.append(getCode(true));
+        sb.append("\n");
+        sb.append("Current code: ");
+        sb.append(getCode(false));
+        System.out.println(sb.toString());
+    }
+
     public void order3() {
         if (!isFileLoaded) {
             throw new UnsupportedOperationException("XML File Not Loaded Yet - Make Order 1 First");
@@ -90,24 +109,6 @@ public class MainManager {
 
     }
 
-    public void order2(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("Amount of rotors: ");
-        sb.append(SM.getRotorsAmount());
-        sb.append("\n");
-        sb.append("Amount of reflectors: ");
-        sb.append(SM.getReflectorsAmount());
-        sb.append("\n");
-        sb.append("amount of string that encoded: ");
-        sb.append(enigmaEngine.getNumberOfEncryptions());
-        sb.append("\n");
-        sb.append("Original positions: ");
-        sb.append(getCode(true));
-        sb.append("\n");
-        sb.append("Current code: ");
-        sb.append(getCode(false));
-        System.out.println(sb.toString());
-    }
 
     public void order6(){
         if (enigmaEngine == null) {
@@ -125,9 +126,11 @@ public class MainManager {
     }
 
     public  String getCode(boolean original) {
-
-
-        return '<' + buildRotorString() +
+       if (enigmaEngine == null) {
+           return "Machine Not Configured Yet - No Code Available";
+       }
+        return '<' +
+                buildRotorString() +
                 '>' +
                 '<' +
                 buildPositionString(original) +
