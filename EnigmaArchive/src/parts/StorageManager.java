@@ -140,11 +140,11 @@ public class StorageManager {
     }
 
     public int getRotorsAmount() {
-        return RS.getPartCount();
+        return RS == null ? 0 : RS.getPartCount();
     }
 
     public int getReflectorsAmount() {
-        return RFS.getPartCount();
+        return RFS == null ? 0 : RFS.getPartCount();
     }
 
     public void setOriginalPosition(List<Character> originalPosition) {
