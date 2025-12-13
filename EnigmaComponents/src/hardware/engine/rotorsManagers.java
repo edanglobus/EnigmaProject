@@ -1,9 +1,9 @@
 package hardware.engine;
 
-import hardware.Utils;
 import hardware.parts.Rotor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class rotorsManagers implements Serializable {
@@ -18,7 +18,7 @@ public class rotorsManagers implements Serializable {
         checkRotate();
     }
 
-    public void setRotorPosition(List<Integer> position){
+    public void setRotorsPosition(List<Integer> position){
         if (position.size() != rotors.length){
             throw new IllegalArgumentException("Position list size does not match number of rotors");
         }
@@ -27,6 +27,14 @@ public class rotorsManagers implements Serializable {
             int input = position.get(i);
             rotors[i].setPosition(input);
         }
+    }
+
+    public List<Integer> getRotorsPosotion() {
+        List<Integer> positions = new ArrayList<>();
+        for (Rotor rotor : rotors) {
+            positions.add(rotor.getPosition());
+        }
+        return positions;
     }
 
 

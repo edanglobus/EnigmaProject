@@ -73,7 +73,7 @@ public class AutoConfig extends MachineConfig {
 
         rotorsManagers manager = new rotorsManagers(rotors.toArray(new Rotor[0]));
         List<Integer> indexOfPositions = manager.MappingInputCharPositionByRightColumnToIndex(positions);
-        manager.setRotorPosition(indexOfPositions);
+        manager.setRotorsPosition(indexOfPositions);
         return new Engine(reflector, manager, storageManager.getABC());
     }
 }
