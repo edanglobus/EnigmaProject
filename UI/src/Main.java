@@ -25,7 +25,7 @@ public class Main {
                     case "4" -> mainManager.order4();
                     case "5" -> mainManager.order5();
                     case "6" -> mainManager.order6();
-                    case "7" -> mainManager.showHistory();
+                    case "7" -> mainManager.order7();
                     case "8" -> {
                         System.out.println("Exiting program.");
                         return;

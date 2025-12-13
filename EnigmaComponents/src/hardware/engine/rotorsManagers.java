@@ -34,9 +34,7 @@ public class rotorsManagers {
        int sizeABC = rotors[0].sizeABC;
         for (int i = 0; i < rotors.length - 1; i++) {
             if (rotors[i].getNoche() == rotors[i].getPosition()) {
-                System.out.printf("Rotor State Before:   Rotor ID: %d, Position: %d, Noche: %d\n", rotors[i+1].getID(), rotors[i+1].getPosition(), rotors[i+1].getNoche());
                 rotors[i + 1].rotate();
-                System.out.printf("Rotor State After:   Rotor ID: %d, Position: %d, Noche: %d\n", rotors[i+1].getID(), rotors[i+1].getPosition(), rotors[i+1].getNoche());
             } else {
                 break;
             }
@@ -47,10 +45,7 @@ public class rotorsManagers {
         int signal = index;
 
         for (Rotor rotor : rotors) {
-            System.out.printf("     Passing through Rotor ID: %d, Position: %d, Noche: %d\n", rotor.getID(), rotor.getPosition(), rotor.getNoche());
-            System.out.printf("             Input Char: %c (index %d)\n", Utils.MapNumToABC(signal), signal);
             signal = rotor.encodeForward(signal);
-            System.out.printf("             Output Char: %c (index %d)\n", Utils.MapNumToABC(signal), signal);
         }
 
         return signal ;
@@ -59,10 +54,7 @@ public class rotorsManagers {
     public int passBackward(int index) {
         int signal = index;
         for (int i = rotors.length - 1; i >= 0; i--) {
-            System.out.printf("     Passing through Rotor ID: %d, Position: %d, Noche: %d\n", rotors[i].getID(), rotors[i].getPosition(), rotors[i].getNoche());
-            System.out.printf("             Input Char: %c (index %d)\n", Utils.MapNumToABC(signal), signal);
             signal = rotors[i].encodeBackward(signal);
-            System.out.printf("             Output Char: %c (index %d)\n", Utils.MapNumToABC(signal), signal);
         }
         return signal;
     }

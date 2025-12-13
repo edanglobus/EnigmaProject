@@ -9,6 +9,11 @@ import software.config.MachineConfig;
 import software.config.ManualConfig;
 import storage.StorageManager;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +21,7 @@ import java.util.Scanner;
 public class MachineManager {
 
     private final EnigmaJaxbLoader Loader = new EnigmaJaxbLoader();
-    private final StorageManager SM = new StorageManager(Loader);
+    private StorageManager SM = new StorageManager(Loader);
     private String path;
     private Engine enigmaEngine;
     List<ConfigurationStats> fullHistory = new ArrayList<>();
@@ -32,15 +37,16 @@ public class MachineManager {
             Scanner sc = new Scanner(System.in);
             String path = sc.nextLine().trim(); //to check path
 
-            SM.loadSupplyXMLCheckAndBuildStorages(path);
+            StorageManager tempSM = new StorageManager(Loader);
+            tempSM.loadSupplyXMLCheckAndBuildStorages(path);
+            SM = tempSM;
+
             isFileLoaded = true;
         }
         catch (IllegalArgumentException iae){
-            SM.resetStorages();
             throw new Exception("Invalid XML file: " + iae.getMessage());
         }
         catch (Exception e) {
-            SM.resetStorages();
             throw new Exception("Failed to load XML file: " + e.getMessage());
         }
     }
@@ -125,6 +131,8 @@ public class MachineManager {
     public void order7(){
         showHistory();
     }
+
+
 
     public  String getCode(boolean original) {
        if (enigmaEngine == null) {

@@ -24,7 +24,7 @@ public class EnigmaConfigMapper {
      * Builds a list of Router objects from the JAXB config.
      * Each RotorConfig from the XML is converted into a Router + Wiring.
      */
-    public Map<Integer, Rotor> buildRouters() {
+    public Map<Integer, Rotor> buildRotors() {
 
         String alphabet = config.getAlphabet();
         Map<Integer, Rotor> rotors = new HashMap<>();

@@ -5,7 +5,9 @@ import hardware.parts.Rotor;
 import storage.PartsStorage;
 
 
+import java.util.Collections;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class RotorStorage implements PartsStorage {
     private final Map<Integer, Rotor> rotorMap;
@@ -26,7 +28,12 @@ public class RotorStorage implements PartsStorage {
         return rotorMap.size();
     }
 
-
+    public String availableRotorsStr() {
+        return "Available Rotors:" + rotorMap.keySet().stream()
+                .sorted()                        // Sorts the stream naturally
+                .map(String::valueOf)            // Converts Integers to Strings
+                .collect(Collectors.joining(",")); // Joins with comma, no trailing comma issues
+    }
     @Override
     public int getPartCount() {
         return rotorMap.size();
