@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Machine implements Serializable {
+    String alphabet;
     private MachineState state;
     private List<Character> originalPosition;
     private List<Integer> currentPosition;
@@ -17,6 +18,14 @@ public class Machine implements Serializable {
 
     public MachineState getState() {
         return state;
+    }
+
+    public String getAlphabet() {
+        return alphabet;
+    }
+
+    public void setAlphabet(String alphabet) {
+        this.alphabet = alphabet;
     }
 
     public List<Integer> getCurrentPosition() {

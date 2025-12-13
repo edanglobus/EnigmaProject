@@ -148,6 +148,10 @@ public class StorageManager {
         return RFS == null ? 0 : RFS.getPartCount();
     }
 
+    public void setABC(String ABC) {
+        this.ABC = ABC;
+    }
+
     public void setOriginalPosition(List<Character> originalPosition) {
         this.originalPosition = originalPosition;
     }

@@ -45,7 +45,7 @@ public class MachineManager {
 
     public void order2_showMachineDetails(){
         if (!isFileLoaded) {
-            throw new UnsupportedOperationException("XML File Not Loaded Yet - Make Order 1 First");
+            System.out.println("XML File Not Loaded, Storage Are Empty!");
         }
 
         String sb = "Amount of rotors: " +
@@ -81,6 +81,7 @@ public class MachineManager {
         }
         MachineConfig machineConfiguration = new AutoConfig(SM);
         this.enigmaMachine.setEngine(machineConfiguration.configureAndGetEngine());
+        System.out.println("Auto Configuration Completed!");
         ConfigurationStats state = new ConfigurationStats(getCode(true));
         enigmaMachine.getFullHistory().add(state);
     }
@@ -139,6 +140,7 @@ public class MachineManager {
         Path filePath = Paths.get(finalFileName);
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath.toFile()))) {
+            enigmaMachine.setAlphabet(SM.getABC());
             enigmaMachine.setOriginalPosition(SM.getOriginalPosition());
             enigmaMachine.setCurrentPosition(enigmaMachine.getEngine().getRotorsManagers().getRotorsPosotion());
             oos.writeObject(enigmaMachine);
@@ -167,6 +169,7 @@ public class MachineManager {
             SM.setOriginalPosition(newEnigmaMachine.getOriginalPosition());
             List<Integer> currentPositions = newEnigmaMachine.getCurrentPosition();
             newEnigmaMachine.getEngine().getRotorsManagers().setRotorsPosition(currentPositions);
+            SM.setABC(newEnigmaMachine.getAlphabet());
 
             System.out.println(" Full machine state loaded successfully (BINARY) from: " + filePath.toAbsolutePath());
             return newEnigmaMachine; // Returning the loaded object
