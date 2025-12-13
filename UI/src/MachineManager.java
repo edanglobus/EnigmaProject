@@ -33,6 +33,7 @@ public class MachineManager {
             SM = tempSM;
 
             isFileLoaded = true;
+            System.out.println("File loaded successfully");
         }
         catch (IllegalArgumentException iae){
             throw new Exception("Invalid XML file: " + iae.getMessage());
@@ -43,6 +44,10 @@ public class MachineManager {
     }
 
     public void order2_showMachineDetails(){
+        if (!isFileLoaded) {
+            System.out.println("XML File Not Loaded, Storage Are Empty!");
+        }
+
         String sb = "Amount of rotors: " +
                 SM.getRotorsAmount() +
                 "\n" +
@@ -76,6 +81,7 @@ public class MachineManager {
         }
         MachineConfig machineConfiguration = new AutoConfig(SM);
         this.enigmaMachine.setEngine(machineConfiguration.configureAndGetEngine());
+        System.out.println("Auto Configuration Completed!");
         ConfigurationStats state = new ConfigurationStats(getCode(true));
         enigmaMachine.getFullHistory().add(state);
     }
@@ -127,13 +133,14 @@ public class MachineManager {
             throw new UnsupportedOperationException("Engine Not Configured Yet - Make Order 3/4 First");
         }
 
-        System.out.print("Enter file path for BINARY save (e.g., 'session_backup.dat'): ");
+        System.out.print("Enter file path for BINARY save: ");
         Scanner sc = new Scanner(System.in);
         String filePathName = sc.nextLine().trim();
         String finalFileName = filePathName.endsWith(".dat") ? filePathName : filePathName + ".dat";
         Path filePath = Paths.get(finalFileName);
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath.toFile()))) {
+            enigmaMachine.setAlphabet(SM.getABC());
             enigmaMachine.setOriginalPosition(SM.getOriginalPosition());
             enigmaMachine.setCurrentPosition(enigmaMachine.getEngine().getRotorsManagers().getRotorsPosotion());
             oos.writeObject(enigmaMachine);
@@ -149,7 +156,7 @@ public class MachineManager {
     }
 
     public Machine order9_LoadMachine() {
-        System.out.print("Enter file path for BINARY load (e.g., 'session_backup.dat'): ");
+        System.out.print("Enter file path for BINARY load: ");
         Scanner sc = new Scanner(System.in);
         String filePathName = sc.nextLine().trim();
         String finalFileName = filePathName.endsWith(".dat") ? filePathName : filePathName + ".dat";
@@ -162,6 +169,7 @@ public class MachineManager {
             SM.setOriginalPosition(newEnigmaMachine.getOriginalPosition());
             List<Integer> currentPositions = newEnigmaMachine.getCurrentPosition();
             newEnigmaMachine.getEngine().getRotorsManagers().setRotorsPosition(currentPositions);
+            SM.setABC(newEnigmaMachine.getAlphabet());
 
             System.out.println(" Full machine state loaded successfully (BINARY) from: " + filePath.toAbsolutePath());
             return newEnigmaMachine; // Returning the loaded object

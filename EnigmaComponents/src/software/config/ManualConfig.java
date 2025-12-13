@@ -30,7 +30,7 @@ public class ManualConfig extends MachineConfig {
             usedRotors.add(rotorId);
             rotors.add(storageManager.optionalGetRotorByID(rotorId));
         }
-        return rotors.reversed();
+        return new ArrayList<>(rotors.reversed());
     }
 
     private Reflector askReflector() {
@@ -48,9 +48,9 @@ public class ManualConfig extends MachineConfig {
     private List<Character> breakPositionString(String positions) {
         // Returns IntStream
         // Cast int to Character
-        return positions.chars()              // Returns IntStream
+        return new ArrayList<>(positions.chars()              // Returns IntStream
                 .mapToObj(c -> (char) c)           // Cast int to Character
-                .toList().reversed();
+                .toList().reversed());
     }
 
     @Override

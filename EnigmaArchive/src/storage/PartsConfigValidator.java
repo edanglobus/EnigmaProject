@@ -73,8 +73,12 @@ public class PartsConfigValidator {
         return true;
     }
 
-    public void reset() {
-        usedRoutorIds.clear();
-        usedReflectorIds.clear();
+    public static void reset() {
+        if (usedRoutorIds != null) {
+            usedRoutorIds.clear();
+        }
+        if (usedReflectorIds != null) {
+            usedReflectorIds.clear();
+        }
     }
 }
