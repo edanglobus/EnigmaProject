@@ -4,7 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/EnigmaArchive/EnigmaArchive.iml" filepath="$PROJECT_DIR$/EnigmaArchive/EnigmaArchive.iml" />
       <module fileurl="file://$PROJECT_DIR$/EnigmaComponents/EnigmaComponents.iml" filepath="$PROJECT_DIR$/EnigmaComponents/EnigmaComponents.iml" />
-      <module fileurl="file://$PROJECT_DIR$/EnigmaMachine.iml" filepath="$PROJECT_DIR$/EnigmaMachine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EnigmaMachine/EnigmaMachine.iml" filepath="$PROJECT_DIR$/EnigmaMachine/EnigmaMachine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EnigmaMachineProject.iml" filepath="$PROJECT_DIR$/EnigmaMachineProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/UI/UI.iml" filepath="$PROJECT_DIR$/UI/UI.iml" />
     </modules>
   </component>

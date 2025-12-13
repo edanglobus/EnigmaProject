@@ -4,7 +4,9 @@ package hardware.engine;
 import hardware.Utils;
 import hardware.parts.Reflector;
 
-public class Engine {
+import java.io.Serializable;
+
+public class Engine implements Serializable {
 
     private final Reflector reflector;
     private final rotorsManagers manager;

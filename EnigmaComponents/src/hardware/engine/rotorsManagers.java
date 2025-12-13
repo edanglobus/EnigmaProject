@@ -3,9 +3,10 @@ package hardware.engine;
 import hardware.Utils;
 import hardware.parts.Rotor;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class rotorsManagers {
+public class rotorsManagers implements Serializable {
     private final Rotor[] rotors;
 
     public rotorsManagers(Rotor[] rotors) {

@@ -3,9 +3,10 @@ package hardware.parts;
 import hardware.WiringCables.WiringReflactor;
 import hardware.Utils;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Reflector  {
+public class Reflector implements Serializable {
    private final String ID;
    private final WiringReflactor wiringReflactor;
 

@@ -3,9 +3,10 @@ package hardware.parts;
 import hardware.WiringCables.WiringRotor;
 import hardware.Utils;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Rotor implements Roundable {
+public class Rotor implements Roundable, Serializable {
     private WiringRotor wiringRotor;
     private final int ID;
     private final int noche;

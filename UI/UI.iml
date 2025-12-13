@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Enigma1.0" exported="" />
     <orderEntry type="module" module-name="EnigmaArchive" exported="" />
+    <orderEntry type="module" module-name="EnigmaMachine" exported="" />
   </component>
 </module>

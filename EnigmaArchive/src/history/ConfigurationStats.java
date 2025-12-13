@@ -1,9 +1,10 @@
 package history;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConfigurationStats {
+public class ConfigurationStats implements Serializable {
     private String machineConfiguration;
     private List<ProcessedString> processedStrings;
 
