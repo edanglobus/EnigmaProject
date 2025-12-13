@@ -27,7 +27,7 @@ public class MachineManager {
             System.out.println("Supply XML path:");
             Scanner sc = new Scanner(System.in);
             String path = sc.nextLine().trim(); //to check path
-
+            SM.resetUsedIds();
             StorageManager tempSM = new StorageManager(Loader);
             tempSM.loadSupplyXMLCheckAndBuildStorages(path);
             SM = tempSM;
@@ -119,6 +119,10 @@ public class MachineManager {
     }
 
     public void order8_saveMachine() {
+        if (enigmaMachine.getEngine() == null) {
+            throw new UnsupportedOperationException("Engine Not Configured Yet - Make Order 3/4 First");
+        }
+
         System.out.print("Enter file path for BINARY save (e.g., 'session_backup.dat'): ");
         Scanner sc = new Scanner(System.in);
         String filePathName = sc.nextLine().trim();

@@ -156,14 +156,7 @@ public class StorageManager {
         return originalPosition;
     }
 
-    public void resetStorages() {
-        this.RS = null;
-        this.RFS = null;
-        this.EC = null;
-        this.ECM = null;
-        this.ABC = null;
-        this.originalPosition = null;
-        this.ValidSupply = false;
+    public void resetUsedIds() {
         if (PCV != null) {
             this.PCV.reset();
         }
