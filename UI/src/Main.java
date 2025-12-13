@@ -9,7 +9,7 @@ public class Main {
 
         while (true) {
             System.out.println("""
-                    Choose an order:
+                    \nCHOOSE AN ORDER:
                     1. Load XML file
                     2. Machine configuration
                     3. Manual Configuration

@@ -119,6 +119,10 @@ public class MachineManager {
     }
 
     public void order8_saveMachine() {
+        if (!isFileLoaded) {
+            throw new UnsupportedOperationException("XML File Not Loaded Yet - Make Order 1 First");
+        }
+
         if (enigmaMachine.getEngine() == null) {
             throw new UnsupportedOperationException("Engine Not Configured Yet - Make Order 3/4 First");
         }
