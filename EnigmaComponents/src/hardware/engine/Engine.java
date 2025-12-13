@@ -4,7 +4,9 @@ package hardware.engine;
 import hardware.Utils;
 import hardware.parts.Reflector;
 
-public class Engine {
+import java.io.Serializable;
+
+public class Engine implements Serializable {
 
     private final Reflector reflector;
     private final rotorsManagers manager;
@@ -13,13 +15,12 @@ public class Engine {
 
 
     public Engine(Reflector reflector, rotorsManagers manager, String alphabet) {
+        if (manager.getRotors().length != 3) {
+            throw new IllegalArgumentException("3 rotors are required to initialize the engine.");
+        }
         this.reflector = reflector;
         this.manager = manager;
         this.alphabet = alphabet;
-
-        if (manager.getRotors().length < 3) {
-            throw new IllegalArgumentException("At least 3 rotors are required to initialize the engine.");
-        }
     }
 
     public char processChar(char ch) {
@@ -27,16 +28,11 @@ public class Engine {
         if (index == -1) {
             throw new IllegalArgumentException("Char '" + ch + "' not in alphabet");
         }
-        System.out.printf("\nProcessing char: %c (index %d)\n", ch, index);
         manager.stepRotors();
         int signal = manager.passForward(index);
-        System.out.printf("Char after rotors forward pass: %c  (index %d)\n", Utils.MapNumToABC(signal), signal);
         signal = reflector.reflect(signal);
-        System.out.printf("             Reflecting output Char: %c %d\n",Utils.MapNumToABC(index) , index);
 
-        System.out.printf("Char after reflector: %c  (index %d)\n", Utils.MapNumToABC(signal), signal);
         signal = manager.passBackward(signal);
-        System.out.printf("Char after rotors backward pass: %c  (index %d)\n", Utils.MapNumToABC(signal), signal);
         return alphabet.charAt(signal);
     }
 

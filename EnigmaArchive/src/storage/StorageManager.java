@@ -23,7 +23,8 @@ public class StorageManager {
     private ReflectorStorage RFS;
     private String ABC;
     private List<Character>  originalPosition;
-    private boolean ValidSupply;
+    private boolean ValidSupply = false;
+    private StorageManager myCopy;
 
 
     public StorageManager(EnigmaJaxbLoader loader) {
@@ -64,7 +65,7 @@ public class StorageManager {
 
     private void buildStorages() {
         try {
-            RS = new RotorStorage(ECM.buildRouters());
+            RS = new RotorStorage(ECM.buildRotors());
             RFS = new ReflectorStorage(ECM.buildReflectors());
         } catch (Exception e) {
             throw new IllegalArgumentException("Failed to build storages: " + e.getMessage());
@@ -110,9 +111,6 @@ public class StorageManager {
         return ABC;
     }
 
-    public void showAvailableReflectors() {
-        RFS.printAvailableReflectors();
-    }
 
     public void printStorages() {
         System.out.print(this.toString());
@@ -158,16 +156,17 @@ public class StorageManager {
         return originalPosition;
     }
 
-    public void resetStorages() {
-        this.RS = null;
-        this.RFS = null;
-        this.EC = null;
-        this.ECM = null;
-        this.ABC = null;
-        this.originalPosition = null;
-        this.ValidSupply = false;
+    public void resetUsedIds() {
         if (PCV != null) {
             this.PCV.reset();
         }
     }
+
+    public String reflectorStorageString() {
+        return RFS.availableReflectorsStr();
+    }
+    public String rotorStorageString() {
+        return RS.availableRotorsStr();
+    }
+
 }

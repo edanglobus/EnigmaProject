@@ -1,8 +1,10 @@
+import machine.Machine;
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        MachineManager mainManager = new MachineManager();
+        MachineManager machineManager = new MachineManager();
         Scanner sc = new Scanner(System.in);
 
         while (true) {
@@ -15,23 +17,34 @@ public class Main {
                     5. Encode/Decode String
                     6. Reset to the original code
                     7. Show history
-                    8. Exit""");
+                    8. Save Machine to file
+                    9. Load Machine from file
+                    0. Exit""");
             String choice = sc.nextLine().trim();
             try {
                 switch (choice) {
-                    case "1" -> mainManager.order1();
-                    case "2" -> mainManager.order2();
-                    case "3" -> mainManager.order3();
-                    case "4" -> mainManager.order4();
-                    case "5" -> mainManager.order5();
-                    case "6" -> mainManager.order6();
-                    case "7" -> mainManager.showHistory();
-                    case "8" -> {
-                        System.out.println("Exiting program.");
+                    case "1" -> machineManager.order1_readXmlFile();
+                    case "2" -> machineManager.order2_showMachineDetails();
+                    case "3" -> machineManager.order3_manualMachineConfig();
+                    case "4" -> machineManager.order4_autoMachineConfig();
+                    case "5" -> machineManager.order5_encodeOrDecode();
+                    case "6" -> machineManager.order6_restartMachineConfig();
+                    case "7" -> machineManager.order7_showHistory();
+                    case "8" -> machineManager.order8_saveMachine();
+                    case "9" -> {
+                        Machine loadedMachine = machineManager.order9_LoadMachine();
+
+                        if (loadedMachine != null) {
+                            machineManager.setEnigmaMachine(loadedMachine);
+                        }
+                    }
+                    case "0" -> {
+                        System.out.println("Exiting Program.");
                         return;
                     }
-                    default -> System.out.println("Invalid choice. Please try again.");
+                    default -> System.out.println("Invalid choice, please try again.");
                 }
+
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
             }

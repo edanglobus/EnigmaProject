@@ -1,9 +1,10 @@
 package hardware.WiringCables;
 
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class WiringReflactor {
+public class WiringReflactor implements Serializable {
     public final int [] wiringRef;
 
     public WiringReflactor(String input , String output, int alphabetSize) {

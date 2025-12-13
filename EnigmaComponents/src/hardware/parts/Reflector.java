@@ -3,9 +3,10 @@ package hardware.parts;
 import hardware.WiringCables.WiringReflactor;
 import hardware.Utils;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Reflector  {
+public class Reflector implements Serializable {
    private final String ID;
    private final WiringReflactor wiringReflactor;
 
@@ -16,7 +17,6 @@ public class Reflector  {
     }
 
     public int reflect(int index){
-        System.out.printf("             Reflecting input Char: %c %d\n", Utils.MapNumToABC(index) , index);
         return wiringReflactor.wiringRef[index];
     }
 

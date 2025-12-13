@@ -1,6 +1,8 @@
 package hardware.WiringCables;
 
-public class WiringRotor implements Wiring{
+import java.io.Serializable;
+
+public class WiringRotor implements Wiring, Serializable {
     private String alphabet;
     private String rightColumn;
     private String leftColumn;

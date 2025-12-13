@@ -1,11 +1,12 @@
 package hardware.engine;
 
-import hardware.Utils;
 import hardware.parts.Rotor;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class rotorsManagers {
+public class rotorsManagers implements Serializable {
     private final Rotor[] rotors;
 
     public rotorsManagers(Rotor[] rotors) {
@@ -17,7 +18,7 @@ public class rotorsManagers {
         checkRotate();
     }
 
-    public void setRotorPosition(List<Integer> position){
+    public void setRotorsPosition(List<Integer> position){
         if (position.size() != rotors.length){
             throw new IllegalArgumentException("Position list size does not match number of rotors");
         }
@@ -28,15 +29,21 @@ public class rotorsManagers {
         }
     }
 
+    public List<Integer> getRotorsPosotion() {
+        List<Integer> positions = new ArrayList<>();
+        for (Rotor rotor : rotors) {
+            positions.add(rotor.getPosition());
+        }
+        return positions;
+    }
+
 
     //check if the rotors need to rotate the next rotor
     public void checkRotate(){
        int sizeABC = rotors[0].sizeABC;
         for (int i = 0; i < rotors.length - 1; i++) {
             if (rotors[i].getNoche() == rotors[i].getPosition()) {
-                System.out.printf("Rotor State Before:   Rotor ID: %d, Position: %d, Noche: %d\n", rotors[i+1].getID(), rotors[i+1].getPosition(), rotors[i+1].getNoche());
                 rotors[i + 1].rotate();
-                System.out.printf("Rotor State After:   Rotor ID: %d, Position: %d, Noche: %d\n", rotors[i+1].getID(), rotors[i+1].getPosition(), rotors[i+1].getNoche());
             } else {
                 break;
             }
@@ -47,10 +54,7 @@ public class rotorsManagers {
         int signal = index;
 
         for (Rotor rotor : rotors) {
-            System.out.printf("     Passing through Rotor ID: %d, Position: %d, Noche: %d\n", rotor.getID(), rotor.getPosition(), rotor.getNoche());
-            System.out.printf("             Input Char: %c (index %d)\n", Utils.MapNumToABC(signal), signal);
             signal = rotor.encodeForward(signal);
-            System.out.printf("             Output Char: %c (index %d)\n", Utils.MapNumToABC(signal), signal);
         }
 
         return signal ;
@@ -59,10 +63,7 @@ public class rotorsManagers {
     public int passBackward(int index) {
         int signal = index;
         for (int i = rotors.length - 1; i >= 0; i--) {
-            System.out.printf("     Passing through Rotor ID: %d, Position: %d, Noche: %d\n", rotors[i].getID(), rotors[i].getPosition(), rotors[i].getNoche());
-            System.out.printf("             Input Char: %c (index %d)\n", Utils.MapNumToABC(signal), signal);
             signal = rotors[i].encodeBackward(signal);
-            System.out.printf("             Output Char: %c (index %d)\n", Utils.MapNumToABC(signal), signal);
         }
         return signal;
     }

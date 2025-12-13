@@ -1,6 +1,8 @@
 package history;
 
-public class ProcessedString {
+import java.io.Serializable;
+
+public class ProcessedString implements Serializable {
     private final String source;
     private final String result;
     private final long timeTaken;
