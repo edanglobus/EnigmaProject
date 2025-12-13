@@ -33,6 +33,7 @@ public class MachineManager {
             SM = tempSM;
 
             isFileLoaded = true;
+            System.out.println("File loaded successfully");
         }
         catch (IllegalArgumentException iae){
             throw new Exception("Invalid XML file: " + iae.getMessage());
@@ -43,6 +44,10 @@ public class MachineManager {
     }
 
     public void order2_showMachineDetails(){
+        if (!isFileLoaded) {
+            throw new UnsupportedOperationException("XML File Not Loaded Yet - Make Order 1 First");
+        }
+
         String sb = "Amount of rotors: " +
                 SM.getRotorsAmount() +
                 "\n" +
@@ -127,7 +132,7 @@ public class MachineManager {
             throw new UnsupportedOperationException("Engine Not Configured Yet - Make Order 3/4 First");
         }
 
-        System.out.print("Enter file path for BINARY save (e.g., 'session_backup.dat'): ");
+        System.out.print("Enter file path for BINARY save: ");
         Scanner sc = new Scanner(System.in);
         String filePathName = sc.nextLine().trim();
         String finalFileName = filePathName.endsWith(".dat") ? filePathName : filePathName + ".dat";
@@ -149,7 +154,7 @@ public class MachineManager {
     }
 
     public Machine order9_LoadMachine() {
-        System.out.print("Enter file path for BINARY load (e.g., 'session_backup.dat'): ");
+        System.out.print("Enter file path for BINARY load: ");
         Scanner sc = new Scanner(System.in);
         String filePathName = sc.nextLine().trim();
         String finalFileName = filePathName.endsWith(".dat") ? filePathName : filePathName + ".dat";

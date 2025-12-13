@@ -157,9 +157,7 @@ public class StorageManager {
     }
 
     public void resetUsedIds() {
-        if (PCV != null) {
-            this.PCV.reset();
-        }
+       PCV.reset();
     }
 
     public String reflectorStorageString() {
